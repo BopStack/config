@@ -56,16 +56,16 @@ pnpm exec bopstack-config init --kind=default --dry-run
 
 ```bash
 # Unit tests (Vitest)
-pnpm run test:unit
+just test-unit
 
 # E2E tests (Bats — uses deterministic stub pnpm, no network registry)
-pnpm run test:e2e
+just test-e2e
 
 # Both layers
-pnpm test
+just test
 
 # Full gate (format, lint, typecheck, unit, e2e)
-pnpm run check
+just check
 ```
 
 The e2e tests use a stub `pnpm` that records install arguments and creates fixture config files. No real packages are downloaded.

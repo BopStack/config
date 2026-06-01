@@ -10,16 +10,7 @@
 		"src/"
 	],
 	"type": "module",
-	"scripts": {
-		"typecheck": "tsc --noEmit",
-		"test:unit": "vitest run",
-		"test:e2e": "bats test/e2e",
-		"test": "pnpm run test:unit && pnpm run test:e2e",
-		"format": "oxfmt --config oxfmtrc.json .",
-		"lint": "oxlint .",
-		"build": "tsc",
-		"check": "oxfmt --config oxfmtrc.json . && oxlint . && tsc --noEmit && pnpm run test:unit && pnpm run test:e2e"
-	},
+	"scripts": {},
 	"dependencies": {
 		"arktype": "^2.2.0"
 	},
