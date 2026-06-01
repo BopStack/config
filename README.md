@@ -43,3 +43,29 @@ pnpm exec bopstack-config init --kind=default --dry-run
 - `@bopstack/just` — shared justfile recipes
 - `@bopstack/custom-lint` — custom lint scripts
 - `@bopstack/git-hook` — lefthook git hook config
+
+## Development
+
+### Prerequisites
+
+- [Bats](https://bats-core.readthedocs.io/) for e2e tests:
+  - macOS: `brew install bats-core`
+  - Other: install `bats-core` via system package manager or from GitHub releases
+
+### Commands
+
+```bash
+# Unit tests (Vitest)
+pnpm run test:unit
+
+# E2E tests (Bats — uses deterministic stub pnpm, no network registry)
+pnpm run test:e2e
+
+# Both layers
+pnpm test
+
+# Full gate (format, lint, typecheck, unit, e2e)
+pnpm run check
+```
+
+The e2e tests use a stub `pnpm` that records install arguments and creates fixture config files. No real packages are downloaded.

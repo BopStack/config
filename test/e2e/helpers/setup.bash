@@ -83,10 +83,8 @@ STUB
   # Prepend stub bin to PATH
   PATH="$STUB_BIN:$PATH"
 
-  # CLI invocation command.
-  # After Task 7 (pnpm add -D tsx): BOPSTACK_CONFIG_CLI="node --import tsx src/index.ts"
-  # Fallback using npx for now:
-  BOPSTACK_CONFIG_CLI="npx --package=tsx tsx $REPO_ROOT/src/index.ts"
+  # CLI invocation with tsx (use explicit loader path for reliable CWD-agnostic resolution).
+  BOPSTACK_CONFIG_CLI="node --import $REPO_ROOT/node_modules/tsx/dist/loader.mjs $REPO_ROOT/src/index.ts"
 }
 
 common_teardown() {

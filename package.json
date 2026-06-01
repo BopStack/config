@@ -1,30 +1,33 @@
 {
-  "name": "@bopstack/config",
-  "version": "0.1.0",
-  "description": "CLI for installing @bopstack/* config packages into target projects",
-  "license": "MIT",
-  "bin": {
-    "bopstack-config": "./src/index.ts"
-  },
-  "files": [
-    "src/"
-  ],
-  "type": "module",
-  "scripts": {
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
-    "format": "oxfmt --config oxfmtrc.json .",
-    "lint": "oxlint .",
-    "build": "tsc",
-    "check": "oxfmt --config oxfmtrc.json . && oxlint . && tsc --noEmit && vitest run"
-  },
-  "dependencies": {
-    "arktype": "^2.2.0"
-  },
-  "devDependencies": {
-    "oxfmt": "^0.52.0",
-    "oxlint": "^1.67.0",
-    "typescript": "^5.9.3",
-    "vitest": "^3.2.4"
-  }
+	"name": "@bopstack/config",
+	"version": "0.1.0",
+	"description": "CLI for installing @bopstack/* config packages into target projects",
+	"license": "MIT",
+	"bin": {
+		"bopstack-config": "./src/index.ts"
+	},
+	"files": [
+		"src/"
+	],
+	"type": "module",
+	"scripts": {
+		"typecheck": "tsc --noEmit",
+		"test:unit": "vitest run",
+		"test:e2e": "bats test/e2e",
+		"test": "pnpm run test:unit && pnpm run test:e2e",
+		"format": "oxfmt --config oxfmtrc.json .",
+		"lint": "oxlint .",
+		"build": "tsc",
+		"check": "oxfmt --config oxfmtrc.json . && oxlint . && tsc --noEmit && pnpm run test:unit && pnpm run test:e2e"
+	},
+	"dependencies": {
+		"arktype": "^2.2.0"
+	},
+	"devDependencies": {
+		"oxfmt": "^0.52.0",
+		"oxlint": "^1.67.0",
+		"tsx": "^4.22.4",
+		"typescript": "^5.9.3",
+		"vitest": "^3.2.4"
+	}
 }
