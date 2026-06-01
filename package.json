@@ -3,6 +3,15 @@
 	"version": "0.1.0",
 	"description": "CLI for installing @bopstack/* config packages into target projects",
 	"license": "MIT",
+	"author": "BopStack (https://github.com/BopStack)",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/BopStack/config.git"
+	},
+	"bugs": {
+		"url": "https://github.com/BopStack/config/issues"
+	},
+	"homepage": "https://github.com/BopStack/config#readme",
 	"bin": {
 		"bopstack-config": "./src/index.ts"
 	},
@@ -10,6 +19,12 @@
 		"src/"
 	],
 	"type": "module",
+	"engines": {
+		"node": ">=20"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
 	"scripts": {},
 	"dependencies": {
 		"arktype": "^2.2.0"

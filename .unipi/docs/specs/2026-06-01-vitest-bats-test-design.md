@@ -145,14 +145,14 @@ CLI adapters convert these to user-facing stderr/stdout and exit codes. Unit tes
 
 ## Implementation Checklist
 
-- [ ] Restructure source into `src/index.ts`, `src/cli`, and `src/lib` with process concerns separated from reusable logic.
-- [ ] Refactor init argument parsing and validation so invalid input returns typed errors instead of directly exiting from pure logic.
-- [ ] Add/expand Vitest unit tests for parser, project kind validation, package selection, config file selection, and rename mappings.
-- [ ] Add/expand Vitest unit tests for file copy behavior, dry-run behavior, missing/existing source/target cases, nested dirs, and summary counts.
-- [ ] Add Bats e2e harness with temp project helpers, stub `pnpm`, fixture package files, and cleanup.
-- [ ] Add Bats tests for help, unknown command, missing target, invalid kind, dry-run init, successful full init, rename outputs, summary output, and install failure.
-- [ ] Update package scripts so `test:unit`, `test:e2e`, `test`, and `check` run the intended layers.
-- [ ] Document local/CI prerequisites for running Bats.
+- [x] Restructure source into `src/index.ts`, `src/cli`, and `src/lib` with process concerns separated from reusable logic.
+- [x] Refactor init argument parsing and validation so invalid input returns typed errors instead of directly exiting from pure logic.
+- [x] Add/expand Vitest unit tests for parser, project kind validation, package selection, config file selection, and rename mappings.
+- [x] Add/expand Vitest unit tests for file copy behavior, dry-run behavior, missing/existing source/target cases, nested dirs, and summary counts.
+- [x] Add Bats e2e harness with temp project helpers, stub `pnpm`, fixture package files, and cleanup.
+- [x] Add Bats tests for help, unknown command, missing target, invalid kind, dry-run init, successful full init, rename outputs, summary output, and install failure.
+- [x] Update package scripts so `test:unit`, `test:e2e`, `test`, and `check` run the intended layers.
+- [x] Document local/CI prerequisites for running Bats.
 
 ## Open Questions
 
