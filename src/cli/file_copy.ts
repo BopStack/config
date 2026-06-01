@@ -35,10 +35,7 @@ export interface CopyFileResult {
 /**
  * Resolve the source path for a package's config file.
  */
-function resolve_package_config_path(
-  packageName: string,
-  fileName: string,
-): string | null {
+function resolve_package_config_path(packageName: string, fileName: string): string | null {
   const candidates = [
     join("node_modules", packageName, fileName),
     join("node_modules", packageName, "src", fileName),
@@ -58,9 +55,7 @@ function resolve_package_config_path(
  * Copy a config file from its package to the target project directory.
  * Handles dotfile renames (e.g. lefthook.yml → .lefthook.yml).
  */
-export function copy_config_file(
-  options: CopyFileOptions,
-): CopyFileResult | null {
+export function copy_config_file(options: CopyFileOptions): CopyFileResult | null {
   const { targetDir, fileEntry, dryRun } = options;
   const { sourceFileName, targetFileName } = fileEntry;
   const targetPath = join(targetDir, targetFileName);
@@ -69,22 +64,15 @@ export function copy_config_file(
   if (dryRun) {
     console.log(
       `[dry-run] ${existing ? "overwrite" : "create"} ${targetPath}` +
-        (targetFileName !== sourceFileName
-          ? ` (from ${sourceFileName})`
-          : ""),
+        (targetFileName !== sourceFileName ? ` (from ${sourceFileName})` : ""),
     );
     return { targetPath, existing, written: false };
   }
 
-  const sourcePath = resolve_package_config_path(
-    fileEntry.packageName,
-    sourceFileName,
-  );
+  const sourcePath = resolve_package_config_path(fileEntry.packageName, sourceFileName);
 
   if (!sourcePath && !existing) {
-    console.warn(
-      `[skip] source not found for ${fileEntry.packageName}/${sourceFileName}`,
-    );
+    console.warn(`[skip] source not found for ${fileEntry.packageName}/${sourceFileName}`);
     return null;
   }
 
@@ -98,9 +86,7 @@ export function copy_config_file(
     copyFileSync(sourcePath, targetPath);
     console.log(`[write] ${targetPath}`);
   } else {
-    console.log(
-      `[skip] ${targetPath} (already exists, no source to update)`,
-    );
+    console.log(`[skip] ${targetPath} (already exists, no source to update)`);
   }
 
   return { targetPath, existing, written: true };
@@ -113,9 +99,7 @@ export function report_summary(
   results: (CopyFileResult | null)[],
   packagesInstalled: string[],
 ): void {
-  const written = results.filter(
-    (r): r is CopyFileResult => r !== null && r.written,
-  );
+  const written = results.filter((r): r is CopyFileResult => r !== null && r.written);
   const skipped = results.filter((r) => r === null).length;
   const existing = results.filter(
     (r): r is CopyFileResult => r !== null && r.existing && !r.written,
@@ -125,14 +109,12 @@ export function report_summary(
   console.log(`Packages installed: ${packagesInstalled.length}`);
   console.log(`Config files written: ${written.length}`);
   if (existing.length > 0) {
-    console.log(
-      `Config files already existing (skipped): ${existing.length}`,
-    );
+    console.log(`Config files already existing (skipped): ${existing.length}`);
   }
   if (skipped > 0) {
     console.log(`Config files skipped (source not found): ${skipped}`);
   }
   console.log("\nSuggested next steps:");
   console.log("  Review the copied config files and adjust as needed.");
-  console.log('  Run `just check` to verify the setup.');
+  console.log("  Run `just check` to verify the setup.");
 }
