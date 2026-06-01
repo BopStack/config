@@ -28,5 +28,9 @@ Thumbs.db
 .cache/
 tmp/
 
-# Unipi state
+# Unipi / Pi state
 .unipi/
+.pi/
+.agents/
+skills-lock.json
+.oxfmtrc.json
