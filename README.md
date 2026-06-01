@@ -18,11 +18,11 @@ pnpm exec bopstack-config init --kind=default --dry-run
 
 ### Options
 
-| Flag | Default | Description |
-|------|---------|-------------|
-| `--target=<path>` | `cwd` | Target project directory |
-| `--kind=<type>` | `default` | Project kind (currently only `default`) |
-| `--dry-run` | `false` | Preview changes without writing |
+| Flag              | Default   | Description                             |
+| ----------------- | --------- | --------------------------------------- |
+| `--target=<path>` | `cwd`     | Target project directory                |
+| `--kind=<type>`   | `default` | Project kind (currently only `default`) |
+| `--dry-run`       | `false`   | Preview changes without writing         |
 
 ## What It Does
 

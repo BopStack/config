@@ -1,4 +1,4 @@
-# Publish Order for @bopstack/* Packages
+# Publish Order for @bopstack/\* Packages
 
 Packages must be published to npm in dependency order. Each package depends only on
 standard npm packages (no internal deps) except where noted.
