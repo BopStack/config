@@ -4,7 +4,7 @@
   "description": "CLI for installing @bopstack/* config packages into target projects",
   "license": "MIT",
   "bin": {
-    "bopstack-config": "./src/cli/index.ts"
+    "bopstack-config": "./src/index.ts"
   },
   "files": [
     "src/"

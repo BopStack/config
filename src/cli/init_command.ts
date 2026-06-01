@@ -13,8 +13,8 @@ import {
   get_config_files,
   ProjectKindSchema,
   type ProjectKind,
-} from "./package_selection.js";
-import { copy_config_file, report_summary } from "./file_copy.js";
+} from "../lib/package_selection.js";
+import { copy_config_file, report_summary } from "../lib/file_copy.js";
 
 /** Parsed CLI args for init. */
 interface InitArgs {
