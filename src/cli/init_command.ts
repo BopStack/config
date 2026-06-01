@@ -1,112 +1,76 @@
 /**
- * init command — installs @bopstack/* config packages into a target project.
+ * init command — process adapter for @bopstack/config init.
  *
- * Usage: bopstack-config init [--target=<path>] [--kind=<type>] [--dry-run]
+ * Wires real dependencies (fs, child_process, console) and maps
+ * domain errors to stderr messages and exit codes.
  */
 
 import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import { exit } from "node:process";
-import { type } from "arktype";
-import {
-  get_packages,
-  get_config_files,
-  ProjectKindSchema,
-  type ProjectKind,
-} from "../lib/package_selection.js";
-import { copy_config_file, report_summary } from "../lib/file_copy.js";
+import { parse_init_args } from "../lib/init_args.js";
+import { run_init_core } from "../lib/init_core.js";
+import type { InitError } from "../lib/errors.js";
 
-/** Parsed CLI args for init. */
-interface InitArgs {
-  target: string;
-  kind: ProjectKind;
-  dryRun: boolean;
+/**
+ * Map a domain error to a user-facing stderr message.
+ */
+function report_error(error: InitError): void {
+  switch (error.kind) {
+    case "invalid_project_kind":
+      console.error(`Invalid project kind: ${error.value}`);
+      break;
+    case "unknown_arg":
+      console.error(`Unknown argument: ${error.value}`);
+      console.error("Run `bopstack-config --help` for usage.");
+      break;
+    case "target_missing":
+      console.error(`Target directory does not exist: ${error.target}`);
+      break;
+    case "install_failed":
+      console.error("Package installation failed:");
+      console.error(error.stderr);
+      break;
+  }
 }
 
 /**
- * Parse init command arguments.
+ * Real install function using spawnSync.
  */
-function parse_args(args: string[]): InitArgs {
-  let target: string | undefined;
-  let kind: string | undefined;
-  let dryRun = false;
-
-  for (const arg of args) {
-    if (arg.startsWith("--target=")) {
-      target = arg.slice("--target=".length);
-    } else if (arg.startsWith("--kind=")) {
-      kind = arg.slice("--kind=".length);
-    } else if (arg === "--dry-run") {
-      dryRun = true;
-    }
-  }
-
-  // Validate project kind
-  const kindResult = ProjectKindSchema(kind ?? "default");
-  if (kindResult instanceof type.errors) {
-    console.error(`Invalid project kind: ${kind}`);
-    exit(1);
-  }
+function install_packages(packages: string[], target: string): { status: number | null; stderr: string } {
+  const result = spawnSync("pnpm", ["add", "-D", ...packages], {
+    cwd: target,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
 
   return {
-    target: target ?? process.cwd(),
-    kind: kind as ProjectKind,
-    dryRun,
+    status: result.status,
+    stderr: result.stderr?.toString() ?? "",
   };
 }
 
 /**
- * Init command handler.
+ * Init command handler — entry point from CLI router.
  */
 export async function init(rawArgs: string[]): Promise<void> {
-  const { target, kind, dryRun } = parse_args(rawArgs);
+  const parsed = parse_init_args(rawArgs, { cwd: process.cwd() });
 
-  if (!existsSync(target)) {
-    console.error(`Target directory does not exist: ${target}`);
+  if (!parsed.ok) {
+    report_error(parsed.error);
     exit(1);
+    return;
   }
 
-  const packages = get_packages(kind);
-  const configFiles = get_config_files(kind);
+  const result = run_init_core(parsed.value, {
+    exists: existsSync,
+    install: install_packages,
+    log: console.log,
+    warn: console.warn,
+  });
 
-  console.log(`Initializing @bopstack config in: ${target}`);
-  console.log(`Project kind: ${kind}`);
-  console.log(`Packages to install: ${packages.join(", ")}\n`);
-
-  // Step 1: Install packages
-  if (!dryRun) {
-    console.log("Installing packages...");
-    const installResult = spawnSync("pnpm", ["add", "-D", ...packages], {
-      cwd: target,
-      stdio: ["ignore", "pipe", "pipe"],
-    });
-
-    if (installResult.status !== 0) {
-      const stderr = installResult.stderr?.toString() ?? "";
-      console.error("Package installation failed:");
-      console.error(stderr);
-      exit(1);
-    }
-
-    console.log("Packages installed successfully.\n");
-  } else {
-    console.log("[dry-run] Would install packages via: pnpm add -D " + packages.join(" ") + "\n");
+  if (!result.ok) {
+    report_error(result.error);
+    exit(1);
+    return;
   }
-
-  // Step 2: Copy config files
-  console.log("Copying config files...");
-  const results = configFiles.map((file) =>
-    copy_config_file({
-      targetDir: target,
-      fileEntry: {
-        packageName: file.packageName,
-        sourceFileName: file.sourceFileName,
-        targetFileName: file.targetFileName,
-      },
-      dryRun,
-    }),
-  );
-
-  // Step 3: Report summary
-  report_summary(results, [...packages]);
 }
