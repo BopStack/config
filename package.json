@@ -1,31 +1,44 @@
 {
 	"name": "@bopstack/config",
 	"version": "0.1.0",
-	"description": "BopStack shared configs and CLI — Biome, TypeScript, and more",
-	"exports": {
-		"./biome": "./src/config/biome/biome-config.json",
-		"./tsconfig/base": "./src/config/tsconfig/base.json"
+	"description": "Shared Biome and TypeScript configs plus an init CLI for BopStack projects.",
+	"keywords": [
+		"bopstack",
+		"biome",
+		"typescript",
+		"config"
+	],
+	"homepage": "https://github.com/BopStack/config#readme",
+	"bugs": {
+		"url": "https://github.com/BopStack/config/issues"
 	},
-	"license": "MIT",
-	"author": "BopStack (https://github.com/BopStack)",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/BopStack/config.git"
 	},
-	"bugs": {
-		"url": "https://github.com/BopStack/config/issues"
-	},
-	"homepage": "https://github.com/BopStack/config#readme",
+	"license": "MIT",
+	"author": "BopStack (https://github.com/BopStack)",
+	"type": "module",
 	"bin": {
-		"bopstack-config": "./src/index.ts"
+		"bopstack-config": "./dist/index.js"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./biome": "./src/config/biome/biome-config.json",
+		"./tsconfig/base": "./src/config/tsconfig/base.json",
+		"./package.json": "./package.json"
 	},
 	"files": [
-		"src/"
+		"dist/",
+		"src/config/"
 	],
-	"type": "module",
 	"engines": {
 		"node": ">=20"
 	},
+	"packageManager": "pnpm@10.0.0",
 	"publishConfig": {
 		"access": "public"
 	},

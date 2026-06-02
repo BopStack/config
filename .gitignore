@@ -1,14 +1,19 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 
 # Build artifacts
 dist/
 out/
+coverage/
+*.tsbuildinfo
+*.tgz
 
 # Environment
 .env
 .env.local
 .env.*.local
+.envrc
 
 # IDE
 .idea/
@@ -27,6 +32,7 @@ Thumbs.db
 # Cache
 .cache/
 tmp/
+.temp/
 
 # Unipi / Pi state
 .unipi/
@@ -34,3 +40,6 @@ tmp/
 .agents/
 skills-lock.json
 .oxfmtrc.json
+
+# Handoff notes
+HANDOFF.md

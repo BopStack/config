@@ -1,0 +1,4 @@
+{
+	"stash": "I was thinking of making a mono repo with both the config and all linting scripts i created recenlty + ~/Projects/bopstack/oxc  \n\nwe can create in the config repo:\n\n@bopstack/custom-lint -> lint scripts\n@bopstack/oxfmt -> oxfmt config\n@bopstack/oxlint -> oxlint config\n@bopstack/oxc -> oxc jsplugin\n@bobstack/just -> justfile templates\n@bopstack/tsconfig -> tsconfigs\n@bopstack/tsdown -> tsdown config\n@bopstack/git-hook -> githooks with lefthook config\n@bopstack/config -> setup all of the above\n\nthen i don't know i want to share but don't know how yet\n\ncommitlint config\nmarkdown lint config\nspelling lint",
+	"registers": ["", "", "", "", "", "", "", "", "", ""]
+}

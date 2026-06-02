@@ -171,17 +171,17 @@ Planned coverage:
 
 ## Implementation Checklist
 
-- [ ] Add `src/config/biome/biome.json` and initial `src/config/biome/rules/*.grit` files that replace the current Oxc custom-rule direction.
-- [ ] Add `src/config/tsconfig/base.json` as the new TypeScript base config source.
-- [ ] Update `package.json` dependencies/devDependencies to use Biome and TypeScript instead of Oxfmt/Oxlint/Oxc tooling.
-- [ ] Add `package.json` exports for `./biome` and `./tsconfig/base`.
-- [ ] Refactor package selection so default init installs `@bopstack/config`, `@biomejs/biome`, and `typescript` only.
-- [ ] Refactor init file generation so target projects receive `biome.json` and `tsconfig.json` shims that extend the exported configs.
-- [ ] Update CLI output, README, VISION, and publish-order docs to describe the single-package Biome/TypeScript direction.
-- [ ] Update unit tests for package selection, generated config entries, and exports.
-- [ ] Update e2e tests for new dependency install assertions and generated `biome.json`/`tsconfig.json` files.
-- [ ] Add smoke validation for exported Biome config loading GritQL rules via `./node_modules/@bopstack/config/...` plugin paths.
-- [ ] Add smoke validation for TypeScript resolving `@bopstack/config/tsconfig/base` from a temp consumer project.
+- [x] Add `src/config/biome/biome.json` and initial `src/config/biome/rules/*.grit` files that replace the current Oxc custom-rule direction. — covered by Task 2
+- [x] Add `src/config/tsconfig/base.json` as the new TypeScript base config source. — covered by Task 2
+- [x] Update `package.json` dependencies/devDependencies to use Biome and TypeScript instead of Oxfmt/Oxlint/Oxc tooling. — covered by Task 2
+- [x] Add `package.json` exports for `./biome` and `./tsconfig/base`. — covered by Task 2
+- [x] Refactor package selection so default init installs `@bopstack/config`, `@biomejs/biome`, and `typescript` only. — covered by Task 3
+- [x] Refactor init file generation so target projects receive `biome.json` and `tsconfig.json` shims that extend the exported configs. — covered by Task 3
+- [x] Update CLI output, README, VISION, and publish-order docs to describe the single-package Biome/TypeScript direction. — covered by Task 6
+- [x] Update unit tests for package selection, generated config entries, and exports. — covered by Task 1
+- [x] Update e2e tests for new dependency install assertions and generated `biome.json`/`tsconfig.json` files. — covered by Task 4
+- [x] Add smoke validation for exported Biome config loading GritQL rules via `./node_modules/@bopstack/config/...` plugin paths. — covered by Task 5
+- [x] Add smoke validation for TypeScript resolving `@bopstack/config/tsconfig/base` from a temp consumer project. — covered by Task 5
 
 ## Open Questions
 

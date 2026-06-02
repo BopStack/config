@@ -2,7 +2,8 @@ install:
     pnpm install
 
 build:
-    pnpm exec tsc
+    rm -rf dist
+    pnpm exec tsc -p tsconfig.build.json
 
 check-biome:
     pnpm exec biome check .
@@ -26,4 +27,10 @@ test-e2e:
 
 e2e: test-e2e
 
-check: format lint typecheck test-unit test-e2e
+pack: build
+    pnpm pack --dry-run
+
+publish-dry-run: build
+    pnpm publish --dry-run
+
+check: format lint typecheck test-unit test-e2e pack
