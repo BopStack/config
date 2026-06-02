@@ -6,9 +6,9 @@
  */
 
 import type { InitArgs, InitError, Result } from './errors.js'
-import { copy_config_file, report_summary } from './file_copy.js'
-import type { CopyFileResult } from './file_copy.js'
 import { get_packages, get_config_files } from './package_selection.js'
+import { generate_config } from './shim_generator.js'
+import type { GenerateShimResult } from './shim_generator.js'
 
 /** Dependencies injected into the init orchestrator. */
 export interface InitDeps {
@@ -21,7 +21,7 @@ export interface InitDeps {
 /** Structured result from a successful init run. */
 export interface InitResult {
 	packageCount: number
-	copyResults: (CopyFileResult | null)[]
+	copyResults: (GenerateShimResult | null)[]
 }
 
 /**
@@ -39,7 +39,7 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 	}
 
 	const packages = get_packages(kind as 'default')
-	const configFiles = get_config_files(kind as 'default')
+	const shimEntries = get_config_files(kind as 'default')
 
 	deps.log(`Initializing @bopstack config in: ${target}`)
 	deps.log(`Project kind: ${kind}`)
@@ -64,22 +64,15 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 		deps.log('[dry-run] Would install packages via: pnpm add -D ' + packages.join(' ') + '\n')
 	}
 
-	// Step 2: Copy config files
-	deps.log('Copying config files...')
-	const copyResults = configFiles.map((file) =>
-		copy_config_file({
+	// Step 2: Generate config shim files
+	deps.log('Generating config shim files...')
+	const copyResults = shimEntries.map((entry) =>
+		generate_config({
 			targetDir: target,
-			fileEntry: {
-				packageName: file.packageName,
-				sourceFileName: file.sourceFileName,
-				targetFileName: file.targetFileName
-			},
+			fileEntry: entry,
 			dryRun
 		})
 	)
-
-	// Step 3: Report summary
-	report_summary(copyResults, [...packages])
 
 	return {
 		ok: true,

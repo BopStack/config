@@ -1,36 +1,22 @@
 /**
  * Package selection logic for bopstack-config init.
  *
- * Defines which @bopstack/* packages to install per project kind,
- * and which config files to copy with optional dotfile renaming.
+ * Defines which packages to install per project kind,
+ * and which config shim files to generate.
  */
 
 import { type } from 'arktype'
 
 /**
- * A single config file to copy.
+ * A config file entry describing a generated shim file.
  */
 export interface ConfigFile {
-	/** Source package name (e.g. '@bopstack/tsconfig'). */
+	/** Package name providing the shared config. */
 	packageName: string
-	/** File name inside the package (e.g. 'tsconfig.base.json'). */
+	/** File name to generate inside the package (e.g. 'biome.json'). */
 	sourceFileName: string
-	/** Target file name in the project (e.g. 'tsconfig.base.json'). */
+	/** Target file name in the consumer project. */
 	targetFileName: string
-}
-
-/** Dotfile rename table: package files that need a leading dot on install. */
-const DOTFILE_RENAMES: Record<string, string> = {
-	'lefthook.yml': '.lefthook.yml',
-	'markdownlint.json': '.markdownlint.json',
-	'cspell.json': '.cspell.json'
-}
-
-/**
- * Get the correct target filename, handling dotfile renames.
- */
-function resolve_target_name(fileName: string): string {
-	return DOTFILE_RENAMES[fileName] ?? fileName
 }
 
 /** Project kind schema. */
@@ -39,56 +25,24 @@ export type ProjectKind = (typeof PROJECT_KINDS)[number]
 
 export const ProjectKindSchema = type('"default"')
 
-/** Default package set — all config packages for a standard TypeScript project. */
+/** Default package set — the single consumer-facing package plus tooling. */
 const DEFAULT_PACKAGES = [
-	'@bopstack/tsconfig',
-	'@bopstack/oxfmt',
-	'@bopstack/oxlint',
-	'@bopstack/oxc',
-	'@bopstack/commitlint',
-	'@bopstack/markdownlint',
-	'@bopstack/spellcheck',
-	'@bopstack/just',
-	'@bopstack/custom-lint',
-	'@bopstack/git-hook'
+	'@bopstack/config',
+	'@biomejs/biome',
+	'typescript'
 ] as const
 
+/** Config shim entries generated into the consumer project. */
 const DEFAULT_CONFIG_FILES: ConfigFile[] = [
 	{
-		packageName: '@bopstack/tsconfig',
-		sourceFileName: 'tsconfig.base.json',
-		targetFileName: 'tsconfig.base.json'
+		packageName: '@bopstack/config',
+		sourceFileName: 'biome.json',
+		targetFileName: 'biome.json'
 	},
 	{
-		packageName: '@bopstack/oxfmt',
-		sourceFileName: 'oxfmtrc.json',
-		targetFileName: 'oxfmtrc.json'
-	},
-	{
-		packageName: '@bopstack/oxlint',
-		sourceFileName: 'oxlintrc.json',
-		targetFileName: 'oxlintrc.json'
-	},
-	{
-		packageName: '@bopstack/commitlint',
-		sourceFileName: 'commitlintrc.ts',
-		targetFileName: 'commitlint.config.ts'
-	},
-	{ packageName: '@bopstack/just', sourceFileName: 'justfile', targetFileName: 'justfile' },
-	{
-		packageName: '@bopstack/git-hook',
-		sourceFileName: 'lefthook.yml',
-		targetFileName: resolve_target_name('lefthook.yml')
-	},
-	{
-		packageName: '@bopstack/markdownlint',
-		sourceFileName: 'markdownlint.json',
-		targetFileName: resolve_target_name('markdownlint.json')
-	},
-	{
-		packageName: '@bopstack/spellcheck',
-		sourceFileName: 'cspell.json',
-		targetFileName: resolve_target_name('cspell.json')
+		packageName: '@bopstack/config',
+		sourceFileName: 'tsconfig.json',
+		targetFileName: 'tsconfig.json'
 	}
 ]
 
@@ -105,7 +59,7 @@ export function get_packages(kind: ProjectKind): readonly string[] {
 }
 
 /**
- * Get config files to copy for a given project kind.
+ * Get config file shim entries for a given project kind.
  */
 export function get_config_files(kind: ProjectKind): ConfigFile[] {
 	switch (kind) {
