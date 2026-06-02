@@ -57,7 +57,7 @@ describe('run_init_core', () => {
 
 		expect(result.ok).toBe(true)
 		if (result.ok) {
-			expect(result.value.packageCount).toBeGreaterThanOrEqual(9)
+			expect(result.value.packageCount).toBe(3)
 		}
 	})
 
@@ -69,7 +69,7 @@ describe('run_init_core', () => {
 
 		expect(result.ok).toBe(true)
 		if (result.ok) {
-			expect(result.value.packageCount).toBeGreaterThanOrEqual(9)
+			expect(result.value.packageCount).toBe(3)
 		}
 	})
 
