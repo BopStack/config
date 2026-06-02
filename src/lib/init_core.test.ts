@@ -2,10 +2,9 @@
  * Tests for init orchestration core.
  */
 
-import { describe, it, expect } from 'vitest'
-
-import { run_init_core } from './init_core.js'
+import { describe, expect, it } from 'vitest'
 import type { InitDeps } from './init_core.js'
+import { run_init_core } from './init_core.js'
 
 function create_mock_deps(overrides: Partial<InitDeps> = {}): InitDeps {
 	const noop = (..._args: unknown[]) => {}

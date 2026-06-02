@@ -22,9 +22,7 @@
 			}
 		}
 	},
-	"plugins": [
-		"./node_modules/@bopstack/config/src/config/biome/rules/no-console.grit"
-	],
+	"plugins": ["./node_modules/@bopstack/config/src/config/biome/rules/no-console.grit"],
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded",

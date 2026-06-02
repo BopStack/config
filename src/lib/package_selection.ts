@@ -26,11 +26,7 @@ export type ProjectKind = (typeof PROJECT_KINDS)[number]
 export const ProjectKindSchema = type('"default"')
 
 /** Default package set — the single consumer-facing package plus tooling. */
-const DEFAULT_PACKAGES = [
-	'@bopstack/config',
-	'@biomejs/biome',
-	'typescript'
-] as const
+const DEFAULT_PACKAGES = ['@bopstack/config', '@biomejs/biome', 'typescript'] as const
 
 /** Config shim entries generated into the consumer project. */
 const DEFAULT_CONFIG_FILES: ConfigFile[] = [

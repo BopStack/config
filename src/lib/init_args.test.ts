@@ -2,7 +2,7 @@
  * Tests for init argument parsing.
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 import { parse_init_args } from './init_args.js'
 

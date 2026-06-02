@@ -124,11 +124,9 @@ export function compute_summary(
 	results: (CopyFileResult | null)[],
 	packageCount: number
 ): CopySummary {
-	const written = results.filter((r): r is CopyFileResult => r !== null && r.written)
+	const written = results.filter((r): r is CopyFileResult => r?.written)
 	const skipped = results.filter((r) => r === null).length
-	const existing = results.filter(
-		(r): r is CopyFileResult => r !== null && r.existing && !r.written
-	)
+	const existing = results.filter((r): r is CopyFileResult => r?.existing && !r.written)
 
 	return { written, skipped, existing, packageCount }
 }

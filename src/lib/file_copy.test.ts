@@ -2,14 +2,13 @@
  * Tests for file copy logic.
  */
 
-import { mkdirSync, rmSync, writeFileSync, readFileSync, existsSync, mkdtempSync } from 'node:fs'
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-
-import { copy_config_file, compute_summary } from './file_copy.js'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import type { CopyFileResult } from './file_copy.js'
+import { compute_summary, copy_config_file } from './file_copy.js'
 
 /** Create a temp dir for a single test. */
 function create_temp_target(): string {

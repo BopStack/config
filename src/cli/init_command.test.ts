@@ -4,7 +4,7 @@
 
 import { existsSync } from 'node:fs'
 
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
 describe('init arg parsing', () => {
 	it('detects a valid target directory', () => {

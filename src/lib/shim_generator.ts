@@ -6,8 +6,8 @@
  * mechanism for Biome and TypeScript configs.
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { dirname, join } from 'node:path'
 
 import type { ConfigFile } from './package_selection.js'
 
