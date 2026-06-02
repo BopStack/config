@@ -66,13 +66,24 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 
 	// Step 2: Generate config shim files
 	deps.log('Generating config shim files...')
-	const copyResults = shimEntries.map((entry) =>
-		generate_config({
+	const copyResults = shimEntries.map((entry) => {
+		const result = generate_config({
 			targetDir: target,
 			fileEntry: entry,
 			dryRun
 		})
-	)
+
+		const label = result.written ? '  ✓' : dryRun ? '  [dry-run]' : '  -'
+		deps.log(`${label} ${result.targetPath}`)
+
+		return result
+	})
+
+	// Step 3: Print summary
+	const written = copyResults.filter((r) => r && r.written).length
+	deps.log(`\n--- Summary ---`)
+	deps.log(`  Packages installed: ${packages.length}`)
+	deps.log(`  Config files written: ${written}`)
 
 	return {
 		ok: true,

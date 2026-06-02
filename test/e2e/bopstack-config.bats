@@ -78,65 +78,62 @@ teardown() {
 @test "init --dry-run prints preview and does not write files" {
   run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR" --dry-run
   [ "$status" -eq 0 ]
-  echo "$output" | grep -q "\[dry-run\] Would install packages"
-  echo "$output" | grep -q "\[dry-run\] create"
-  # Verify no config files were written
-  [ ! -f "$PROJECT_DIR/.lefthook.yml" ]
-  [ ! -f "$PROJECT_DIR/.markdownlint.json" ]
-  [ ! -f "$PROJECT_DIR/.cspell.json" ]
-  [ ! -f "$PROJECT_DIR/commitlint.config.ts" ]
+  echo "$output" | grep -q "\[dry-run\].*biome.json"
+  echo "$output" | grep -q "\[dry-run\].*tsconfig.json"
+
+  # No files should have been written
+  [ ! -f "$PROJECT_DIR/biome.json" ]
+  [ ! -f "$PROJECT_DIR/tsconfig.json" ]
 }
 
 # --- Successful full init ---
 
-@test "init installs packages and copies config files" {
+@test "init installs packages and generates config shims" {
   run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
   [ "$status" -eq 0 ]
   echo "$output" | grep -q "Packages installed successfully"
 
-  # Stub pnpm should have been called with correct args
+  # Stub pnpm should have been called with the new package set
   ARGS_FILE="$BATS_TEST_TMPDIR/pnpm-args.txt"
   [ -f "$ARGS_FILE" ]
   ARGS=$(cat "$ARGS_FILE")
   echo "$ARGS" | grep -q "add -D"
-  echo "$ARGS" | grep -q "@bopstack/tsconfig"
-  echo "$ARGS" | grep -q "@bopstack/oxfmt"
-  echo "$ARGS" | grep -q "@bopstack/git-hook"
+  echo "$ARGS" | grep -q "@bopstack/config"
+  echo "$ARGS" | grep -q "@biomejs/biome"
+  echo "$ARGS" | grep -q "typescript"
 
-  # Config files should exist with fixture content
-  [ -f "$PROJECT_DIR/tsconfig.base.json" ]
-  [ -f "$PROJECT_DIR/oxfmtrc.json" ]
-  [ -f "$PROJECT_DIR/oxlintrc.json" ]
-  [ -f "$PROJECT_DIR/justfile" ]
+  # Config shims should exist with correct extends content
+  [ -f "$PROJECT_DIR/biome.json" ]
+  [ -f "$PROJECT_DIR/tsconfig.json" ]
+  grep -q 'extends' "$PROJECT_DIR/biome.json"
+  grep -q '@bopstack/config/biome' "$PROJECT_DIR/biome.json"
+  grep -q 'extends' "$PROJECT_DIR/tsconfig.json"
+  grep -q '@bopstack/config/tsconfig/base' "$PROJECT_DIR/tsconfig.json"
 }
 
-# --- Rename assertions ---
+# --- No old packages ---
 
-@test "init renames lefthook.yml to .lefthook.yml" {
+@test "init does not install old out-of-scope packages" {
   run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
   [ "$status" -eq 0 ]
-  [ -f "$PROJECT_DIR/.lefthook.yml" ]
-  [ ! -f "$PROJECT_DIR/lefthook.yml" ]
+
+  ARGS_FILE="$BATS_TEST_TMPDIR/pnpm-args.txt"
+  ARGS=$(cat "$ARGS_FILE")
+  ! echo "$ARGS" | grep -q "@bopstack/tsconfig"
+  ! echo "$ARGS" | grep -q "@bopstack/oxfmt"
+  ! echo "$ARGS" | grep -q "@bopstack/oxlint"
+  ! echo "$ARGS" | grep -q "@bopstack/git-hook"
 }
 
-@test "init renames markdownlint.json to .markdownlint.json" {
-  run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
-  [ "$status" -eq 0 ]
-  [ -f "$PROJECT_DIR/.markdownlint.json" ]
-  [ ! -f "$PROJECT_DIR/markdownlint.json" ]
-}
+# --- No old dotfile renames ---
 
-@test "init renames cspell.json to .cspell.json" {
+@test "init does not generate old dotfile renames" {
   run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
   [ "$status" -eq 0 ]
-  [ -f "$PROJECT_DIR/.cspell.json" ]
-  [ ! -f "$PROJECT_DIR/cspell.json" ]
-}
-
-@test "init renames commitlintrc.ts to commitlint.config.ts" {
-  run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
-  [ "$status" -eq 0 ]
-  [ -f "$PROJECT_DIR/commitlint.config.ts" ]
+  [ ! -f "$PROJECT_DIR/.lefthook.yml" ]
+  [ ! -f "$PROJECT_DIR/.markdownlint.json" ]
+  [ ! -f "$PROJECT_DIR/.cspell.json" ]
+  [ ! -f "$PROJECT_DIR/commitlint.config.ts" ]
 }
 
 # --- Summary output ---
@@ -151,12 +148,12 @@ teardown() {
 
 # --- Install failure ---
 
-@test "init with install failure exits nonzero, prints error, no copied files" {
+@test "init with install failure exits nonzero, prints error, no generated files" {
   BOPSTACK_STUB_PNPM_FAIL=1 run $BOPSTACK_CONFIG_CLI init --target="$PROJECT_DIR"
   [ "$status" -ne 0 ]
   echo "$output" | grep -q "Package installation failed:"
   echo "$output" | grep -q "stub pnpm failure"
-  # No config files should have been copied
-  [ ! -f "$PROJECT_DIR/tsconfig.base.json" ]
-  [ ! -f "$PROJECT_DIR/.lefthook.yml" ]
+  # No config shims should have been generated
+  [ ! -f "$PROJECT_DIR/biome.json" ]
+  [ ! -f "$PROJECT_DIR/tsconfig.json" ]
 }
