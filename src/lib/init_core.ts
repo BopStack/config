@@ -6,9 +6,9 @@
  */
 
 import type { InitArgs, InitError, Result } from './errors.js'
-import { get_packages, get_config_files } from './package_selection.js'
-import { generate_config } from './shim_generator.js'
+import { get_config_files, get_packages } from './package_selection.js'
 import type { GenerateShimResult } from './shim_generator.js'
+import { generate_config } from './shim_generator.js'
 
 /** Dependencies injected into the init orchestrator. */
 export interface InitDeps {
@@ -61,7 +61,7 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 		}
 		deps.log('Packages installed successfully.\n')
 	} else {
-		deps.log('[dry-run] Would install packages via: pnpm add -D ' + packages.join(' ') + '\n')
+		deps.log(`[dry-run] Would install packages via: pnpm add -D ${packages.join(' ')}\n`)
 	}
 
 	// Step 2: Generate config shim files
@@ -80,7 +80,7 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 	})
 
 	// Step 3: Print summary
-	const written = copyResults.filter((r) => r && r.written).length
+	const written = copyResults.filter((r) => r?.written).length
 	deps.log(`\n--- Summary ---`)
 	deps.log(`  Packages installed: ${packages.length}`)
 	deps.log(`  Config files written: ${written}`)

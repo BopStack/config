@@ -2,15 +2,11 @@
  * Tests for package selection logic.
  */
 
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
 
-import { get_packages, get_config_files, ProjectKindSchema, type ConfigFile } from './package_selection.js'
+import { get_config_files, get_packages, ProjectKindSchema } from './package_selection.js'
 
-const EXPECTED_PACKAGES = [
-	'@bopstack/config',
-	'@biomejs/biome',
-	'typescript'
-]
+const EXPECTED_PACKAGES = ['@bopstack/config', '@biomejs/biome', 'typescript']
 
 const OLD_PACKAGES = [
 	'@bopstack/tsconfig',
@@ -40,13 +36,30 @@ describe('package_selection', () => {
 
 	it('get_config_files returns biome.json and tsconfig.json shim entries for default kind', () => {
 		const files = get_config_files('default')
-		expect(files.some((f) => f.targetFileName === 'biome.json' && f.sourceFileName === 'biome.json')).toBe(true)
-		expect(files.some((f) => f.targetFileName === 'tsconfig.json' && f.sourceFileName === 'tsconfig.json')).toBe(true)
+		expect(
+			files.some((f) => f.targetFileName === 'biome.json' && f.sourceFileName === 'biome.json')
+		).toBe(true)
+		expect(
+			files.some(
+				(f) => f.targetFileName === 'tsconfig.json' && f.sourceFileName === 'tsconfig.json'
+			)
+		).toBe(true)
 	})
 
 	it('get_config_files does not contain old out-of-scope entries', () => {
 		const files = get_config_files('default')
-		const oldPackages = ['@bopstack/tsconfig', '@bopstack/oxfmt', '@bopstack/oxlint', '@bopstack/oxc', '@bopstack/commitlint', '@bopstack/markdownlint', '@bopstack/spellcheck', '@bopstack/just', '@bopstack/custom-lint', '@bopstack/git-hook']
+		const oldPackages = [
+			'@bopstack/tsconfig',
+			'@bopstack/oxfmt',
+			'@bopstack/oxlint',
+			'@bopstack/oxc',
+			'@bopstack/commitlint',
+			'@bopstack/markdownlint',
+			'@bopstack/spellcheck',
+			'@bopstack/just',
+			'@bopstack/custom-lint',
+			'@bopstack/git-hook'
+		]
 		for (const pkg of oldPackages) {
 			expect(files.some((f) => f.packageName === pkg)).toBe(false)
 		}
