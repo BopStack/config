@@ -1,6 +1,6 @@
 # @bopstack/config
 
-Meta-installer CLI for `@bopstack/*` config packages. Wires up tsconfig, oxlint, oxfmt, justfile, lefthook, and more into target projects.
+BopStack shared configs and CLI — Biome and TypeScript configs in a single package.
 
 ## Install
 
@@ -26,23 +26,37 @@ pnpm exec bopstack-config init --kind=default --dry-run
 
 ## What It Does
 
-1. Installs `@bopstack/*` packages as devDependencies
-2. Copies config files from each package into the project root
-3. Renames files when the tool requires a dotfile prefix (e.g. `lefthook.yml` → `.lefthook.yml`)
-4. Reports changed files and suggested next commands
+1. Installs `@bopstack/config`, `@biomejs/biome`, and `typescript` as devDependencies
+2. Generates consumer shim files (`biome.json`, `tsconfig.json`) that extend the shared configs
+3. Reports installed packages and generated files
 
-## Packages Installed
+## Exports
 
-- `@bopstack/tsconfig` — TypeScript base config
-- `@bopstack/oxfmt` — oxfmt formatter config
-- `@bopstack/oxlint` — oxlint linter config
-- `@bopstack/oxc` — custom oxlint plugin (style and naming rules)
-- `@bopstack/commitlint` — commitlint config
-- `@bopstack/markdownlint` — markdownlint config
-- `@bopstack/spellcheck` — cspell config
-- `@bopstack/just` — shared justfile recipes
-- `@bopstack/custom-lint` — custom lint scripts
-- `@bopstack/git-hook` — lefthook git hook config
+| Export path                  | Shared config                            |
+| ---------------------------- | ---------------------------------------- |
+| `@bopstack/config/biome`     | Biome linter and formatter config        |
+| `@bopstack/config/tsconfig/base` | TypeScript compiler base config      |
+
+Consumers extend these in their project config files:
+
+**biome.json**
+```json
+{
+	"extends": ["@bopstack/config/biome"]
+}
+```
+
+**tsconfig.json**
+```json
+{
+	"extends": "@bopstack/config/tsconfig/base"
+}
+```
+
+## Biome GritQL Plugins
+
+The shared Biome config ships with custom GritQL plugins:
+- `no-console` — disallows `console.log` calls
 
 ## Development
 
@@ -51,10 +65,23 @@ pnpm exec bopstack-config init --kind=default --dry-run
 - [Bats](https://bats-core.readthedocs.io/) for e2e tests:
   - macOS: `brew install bats-core`
   - Other: install `bats-core` via system package manager or from GitHub releases
+- [Biome](https://biomejs.dev) ^2.4.5
 
 ### Commands
 
 ```bash
+# Install dependencies
+just install
+
+# Format
+just format
+
+# Lint
+just lint
+
+# Typecheck
+just typecheck
+
 # Unit tests (Vitest)
 just test-unit
 
@@ -63,9 +90,10 @@ just test-e2e
 
 # Both layers
 just test
-
-# Full gate (format, lint, typecheck, unit, e2e)
-just check
 ```
 
-The e2e tests use a stub `pnpm` that records install arguments and creates fixture config files. No real packages are downloaded.
+The e2e tests use a stub `pnpm` that records install arguments. No real packages are downloaded.
+
+## License
+
+MIT

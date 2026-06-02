@@ -2,35 +2,33 @@
 
 ## Intent
 
-`@bopstack/config` is a meta-installer CLI that wires up the `@bopstack/*` config packages into target projects. It does **not** ship config files itself — each config lives in its own focused repo and the CLI orchestrates them.
+`@bopstack/config` is a single consumer-facing package that ships shared tool configs (Biome rules, TypeScript options, and more) plus a CLI to wire them into target projects. Configs live **in this package** and are extended by consumer shims.
 
 ## How It Works
 
-1. `bopstack-config init` detects the target project directory
-2. Installs selected `@bopstack/*` packages via `pnpm add -D`
-3. Copies config files from each installed package into the project root
-4. Renames files when the target tool requires a dotfile prefix (e.g. `lefthook.yml` → `.lefthook.yml`)
-5. Reports changed files and suggested next commands
+1. `bopstack-config init` installs `@bopstack/config`, `@biomejs/biome`, and `typescript` as devDependencies
+2. Generates minimal consumer shim files (`biome.json`, `tsconfig.json`) that extend the shared configs via package exports
+3. Reports installed packages and generated files
 
-## Why Not a Monorepo
+## Why a Single Package
 
-The old VISION described a single package shipping all configs. That approach was abandoned in favor of independent mini-repos because:
+The earlier approach shipped configs in independent mini-repos. That was abandoned because:
 
-- Smaller surface area per package (less drift)
-- Independent versioning and release cadence
-- Consumers can install only what they need
-- Clear ownership per config domain
+- Release overhead across N packages (version bumps, changelogs, CI runs)
+- Version-sync risk between packages that are always installed together
+- Complex multi-package install story for a simple setup
+- Single source of truth for config conventions
 
 ## Scope
 
 ### In Scope
 
-- `bopstack-config init` — install and wire up config packages
-- Dotfile rename handling (in-package clean names → installed dotfiles)
-- Package selection by project kind
+- Shared config assets for Biome and TypeScript (initially)
+- `bopstack-config init` — install packages and generate consumer shims
+- Biome GritQL plugins for custom lint rules
 
 ### Out of Scope
 
-- Config file contents (these live in individual `@bopstack/*` packages)
+- Config domains beyond Biome and TypeScript (future)
 - Update/diff mechanism (future)
 - Drift detection (future)
