@@ -4,11 +4,14 @@ install:
 build:
     pnpm exec tsc
 
+check-biome:
+    pnpm exec biome check .
+
 format:
-    pnpm exec oxfmt --config oxfmtrc.json .
+    pnpm exec biome format --write .
 
 lint:
-    pnpm exec oxlint .
+    pnpm exec biome lint .
 
 typecheck:
     pnpm exec tsc --noEmit

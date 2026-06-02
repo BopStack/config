@@ -1,0 +1,10 @@
+// Disallow console.log calls
+// Use a proper logger or structured logging instead of console.log.
+
+`console.log($_)` as $call where {
+    register_diagnostic(
+        span = $call,
+        message = "Do not use console.log. Use a proper logger instead.",
+        severity = "error"
+    )
+}

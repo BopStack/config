@@ -1,7 +1,11 @@
 {
 	"name": "@bopstack/config",
 	"version": "0.1.0",
-	"description": "CLI for installing @bopstack/* config packages into target projects",
+	"description": "BopStack shared configs and CLI — Biome, TypeScript, and more",
+	"exports": {
+		"./biome": "./src/config/biome/biome-config.json",
+		"./tsconfig/base": "./src/config/tsconfig/base.json"
+	},
 	"license": "MIT",
 	"author": "BopStack (https://github.com/BopStack)",
 	"repository": {
@@ -30,8 +34,7 @@
 		"arktype": "^2.2.0"
 	},
 	"devDependencies": {
-		"oxfmt": "^0.52.0",
-		"oxlint": "^1.67.0",
+		"@biomejs/biome": "^2.4.16",
 		"tsx": "^4.22.4",
 		"typescript": "^5.9.3",
 		"vitest": "^3.2.4"
