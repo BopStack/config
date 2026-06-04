@@ -1,8 +1,4 @@
 `if ($cond) $consequent` as $stmt where {
 	$consequent <: not `{ $_ }`,
-	register_diagnostic(
-		span = $stmt,
-		message = "Use braces for all if/else/while/for statement bodies.",
-		severity = "error"
-	)
+	register_diagnostic(span=$stmt, message="Use braces for all if/else/while/for statement bodies.", severity="error")
 }
