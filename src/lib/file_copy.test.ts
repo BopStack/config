@@ -18,64 +18,64 @@ function create_temp_target(): string {
 /** Create a package fixture dir with a config file. */
 function create_package_fixture(
 	root: string,
-	packageName: string,
-	sourceFileName: string,
-	subDir: string = '',
-	content: string = 'test content'
+	package_name: string,
+	source_file_name: string,
+	sub_dir = '',
+	content = 'test content'
 ): string {
-	const pkgDir = join(root, 'node_modules', packageName, subDir)
-	mkdirSync(pkgDir, { recursive: true })
-	const filePath = join(pkgDir, sourceFileName)
-	writeFileSync(filePath, content, 'utf-8')
-	return filePath
+	const pkg_dir = join(root, 'node_modules', package_name, sub_dir)
+	mkdirSync(pkg_dir, { recursive: true })
+	const file_path = join(pkg_dir, source_file_name)
+	writeFileSync(file_path, content, 'utf-8')
+	return file_path
 }
 
 describe('copy_config_file', () => {
-	let targetDir: string
-	let modulesRoot: string
+	let target_dir: string
+	let modules_root: string
 
 	beforeEach(() => {
-		targetDir = create_temp_target()
-		modulesRoot = create_temp_target()
+		target_dir = create_temp_target()
+		modules_root = create_temp_target()
 	})
 
 	afterEach(() => {
-		rmSync(targetDir, { recursive: true, force: true })
-		rmSync(modulesRoot, { recursive: true, force: true })
+		rmSync(target_dir, { recursive: true, force: true })
+		rmSync(modules_root, { recursive: true, force: true })
 	})
 
 	it('dry-run reports create without writing', () => {
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/git-hook',
 				sourceFileName: 'lefthook.yml',
 				targetFileName: '.lefthook.yml'
 			},
 			dryRun: true,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
 		expect(result!.written).toBe(false)
 		expect(result!.existing).toBe(false)
-		expect(existsSync(join(targetDir, '.lefthook.yml'))).toBe(false)
+		expect(existsSync(join(target_dir, '.lefthook.yml'))).toBe(false)
 	})
 
 	it('dry-run reports overwrite when target exists', () => {
 		// Create target file first
-		mkdirSync(targetDir, { recursive: true })
-		writeFileSync(join(targetDir, '.lefthook.yml'), 'existing content', 'utf-8')
+		mkdirSync(target_dir, { recursive: true })
+		writeFileSync(join(target_dir, '.lefthook.yml'), 'existing content', 'utf-8')
 
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/git-hook',
 				sourceFileName: 'lefthook.yml',
 				targetFileName: '.lefthook.yml'
 			},
 			dryRun: true,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
@@ -84,93 +84,93 @@ describe('copy_config_file', () => {
 	})
 
 	it('copies from root node_modules candidate', () => {
-		create_package_fixture(modulesRoot, '@bopstack/tsconfig', 'tsconfig.base.json', '')
+		create_package_fixture(modules_root, '@bopstack/tsconfig', 'tsconfig.base.json', '')
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/tsconfig',
 				sourceFileName: 'tsconfig.base.json',
 				targetFileName: 'tsconfig.base.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
 		expect(result!.written).toBe(true)
-		expect(result!.targetPath).toBe(join(targetDir, 'tsconfig.base.json'))
-		expect(existsSync(join(targetDir, 'tsconfig.base.json'))).toBe(true)
+		expect(result!.targetPath).toBe(join(target_dir, 'tsconfig.base.json'))
+		expect(existsSync(join(target_dir, 'tsconfig.base.json'))).toBe(true)
 	})
 
 	it('copies from src/ candidate', () => {
-		create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', 'src')
+		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'src')
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
 				targetFileName: 'config.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
 		expect(result!.written).toBe(true)
-		expect(existsSync(join(targetDir, 'config.json'))).toBe(true)
+		expect(existsSync(join(target_dir, 'config.json'))).toBe(true)
 	})
 
 	it('copies from dist/ candidate', () => {
-		create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', 'dist')
+		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'dist')
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
 				targetFileName: 'config.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
 		expect(result!.written).toBe(true)
-		expect(existsSync(join(targetDir, 'config.json'))).toBe(true)
+		expect(existsSync(join(target_dir, 'config.json'))).toBe(true)
 	})
 
 	it('prefers root over src over dist candidate', () => {
 		// Create all three: should pick root
-		const rootPath = create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', '')
-		create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', 'src')
-		create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', 'dist')
+		const root_path = create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', '')
+		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'src')
+		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'dist')
 
 		copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
 				targetFileName: 'config.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		// Verify content came from root path
-		const targetContent = readFileSync(join(targetDir, 'config.json'), 'utf-8')
-		const rootContent = readFileSync(rootPath, 'utf-8')
-		expect(targetContent).toBe(rootContent)
+		const target_content = readFileSync(join(target_dir, 'config.json'), 'utf-8')
+		const root_content = readFileSync(root_path, 'utf-8')
+		expect(target_content).toBe(root_content)
 	})
 
 	it('returns null when source not found and no existing target', () => {
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/nonexistent',
 				sourceFileName: 'missing.json',
 				targetFileName: 'missing.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).toBeNull()
@@ -178,17 +178,17 @@ describe('copy_config_file', () => {
 
 	it('returns written=true when source not found but target exists', () => {
 		// Create target file first
-		writeFileSync(join(targetDir, 'missing.json'), 'existing content', 'utf-8')
+		writeFileSync(join(target_dir, 'missing.json'), 'existing content', 'utf-8')
 
 		const result = copy_config_file({
-			targetDir,
+			targetDir: target_dir,
 			fileEntry: {
 				packageName: '@bopstack/nonexistent',
 				sourceFileName: 'missing.json',
 				targetFileName: 'missing.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
@@ -197,23 +197,23 @@ describe('copy_config_file', () => {
 	})
 
 	it('creates nested target directories', () => {
-		create_package_fixture(modulesRoot, '@bopstack/test-pkg', 'config.json', '')
-		const nestedTarget = join(targetDir, 'subdir', 'nested')
+		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', '')
+		const nested_target = join(target_dir, 'subdir', 'nested')
 
 		const result = copy_config_file({
-			targetDir: nestedTarget,
+			targetDir: nested_target,
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
 				targetFileName: 'config.json'
 			},
 			dryRun: false,
-			nodeModulesRoot: modulesRoot
+			nodeModulesRoot: modules_root
 		})
 
 		expect(result).not.toBeNull()
 		expect(result!.written).toBe(true)
-		expect(existsSync(join(nestedTarget, 'config.json'))).toBe(true)
+		expect(existsSync(join(nested_target, 'config.json'))).toBe(true)
 	})
 })
 

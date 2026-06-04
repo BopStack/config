@@ -1,6 +1,42 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
 	"root": true,
+	"overrides": [
+		{
+			"includes": ["**/*.test.ts", "**/*.spec.ts"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noMagicNumbers": "off",
+						"noNestedTernary": "off"
+					},
+					"nursery": {
+						"noConditionalExpect": "off",
+						"useDestructuring": "off",
+						"useExplicitType": "off",
+						"useExplicitReturnType": "off"
+					},
+					"correctness": {
+						"noUnresolvedImports": "off"
+					},
+					"suspicious": {
+						"noEmptyBlockStatements": "off"
+					},
+					"security": {
+						"noSecrets": "off"
+					},
+					"performance": {
+						"useTopLevelRegex": "off"
+					},
+					"complexity": {
+						"useMaxParams": "off",
+						"noExcessiveLinesPerFunction": "off",
+						"useSimplifiedLogicExpression": "off"
+					}
+				}
+			}
+		}
+	],
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
@@ -9,13 +45,239 @@
 	},
 	"linter": {
 		"enabled": true,
+		"domains": {
+			"project": "all",
+			"types": "all"
+		},
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"useImportExtensions": "off",
+				"noUnresolvedImports": "off",
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"noUnusedFunctionParameters": "error",
+				"noUnusedLabels": "error",
+				"noUnusedPrivateClassMembers": "error",
+				"useExhaustiveDependencies": "error",
+				"noUndeclaredDependencies": "error",
+				"noNestedComponentDefinitions": "error",
+				"noGlobalDirnameFilename": "error",
+				"useHookAtTopLevel": "error",
+				"useParseIntRadix": "error",
+				"noPrivateImports": "error"
+			},
 			"style": {
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"noNestedTernary": "error",
+				"noUselessElse": "error",
+				"noInferrableTypes": "error",
+				"useBlockStatements": "error",
+				"useCollapsedIf": "error",
+				"noMagicNumbers": "error",
+				"useConst": "error",
+				"useTemplate": "error",
+				"noCommonJs": "error",
+				"useNodejsImportProtocol": "error",
+				"useConsistentTypeDefinitions": "error",
+				"useExplicitLengthCheck": "error",
+				"useShorthandAssign": "error",
+				"useDefaultSwitchClause": "error",
+				"useSingleVarDeclarator": "error",
+				"useDefaultParameterLast": "error",
+				"useConsistentArrayType": "error",
+				"useNumericSeparators": "error",
+				"useFragmentSyntax": "error",
+				"noParameterAssign": "error",
+				"noYodaExpression": "error",
+				"useNodeAssertStrict": "error",
+				"useExponentiationOperator": "error",
+				"useExportType": "error",
+				"useImportType": "error",
+				"useNamingConvention": "off"
+			},
+			"suspicious": {
+				"noConsole": "off",
+				"noExplicitAny": "error",
+				"noImportCycles": "error",
+				"noEmptyBlockStatements": "error",
+				"useErrorMessage": "error",
+				"useNumberToFixedDigitsArgument": "error",
+				"noVar": "error",
+				"noConfusingVoidType": "error",
+				"noConstEnum": "error",
+				"noTsIgnore": "error",
+				"noFocusedTests": "error",
+				"noCatchAssign": "error",
+				"noIrregularWhitespace": "error",
+				"noPrototypeBuiltins": "error",
+				"noDocumentCookie": "error",
+				"noConfusingLabels": "error",
+				"noExtraNonNullAssertion": "error",
+				"noOctalEscape": "error",
+				"noRedundantUseStrict": "error",
+				"noSuspiciousSemicolonInJsx": "error",
+				"noTemplateCurlyInString": "error",
+				"noUselessEscapeInString": "error",
+				"noUselessRegexBackrefs": "error",
+				"noApproximativeNumericConstant": "error",
+				"noGlobalIsFinite": "error",
+				"noGlobalIsNan": "error",
+				"useIsArray": "error",
+				"useGetterReturn": "error",
+				"useDefaultSwitchClauseLast": "error",
+				"useAdjacentOverloadSignatures": "error",
+				"noAlert": "error",
+				"noEmptyInterface": "error",
+				"noImplicitAnyLet": "error"
+			},
+			"complexity": {
+				"noForEach": "error",
+				"noBannedTypes": "error",
+				"noImplicitCoercions": "error",
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 15
+					}
+				},
+				"noExcessiveLinesPerFunction": {
+					"level": "error",
+					"options": {
+						"maxLines": 80,
+						"skipBlankLines": true,
+						"skipIifes": true
+					}
+				},
+				"useMaxParams": {
+					"level": "error",
+					"options": {
+						"max": 3
+					}
+				},
+				"noArguments": "error",
+				"noCommaOperator": "error",
+				"noStaticOnlyClass": "error",
+				"noThisInStatic": "error",
+				"useArrowFunction": "error",
+				"useFlatMap": "error",
+				"noUselessLoneBlockStatements": "error",
+				"useLiteralKeys": "error",
+				"noUselessTernary": "error",
+				"noUselessCatch": "error",
+				"useOptionalChain": "error",
+				"useWhile": "error",
+				"useSimplifiedLogicExpression": "error",
+				"noAdjacentSpacesInRegex": "error",
+				"noEmptyTypeParameters": "error",
+				"noExcessiveNestedTestSuites": "error",
+				"noExtraBooleanCast": "error",
+				"noFlatMapIdentity": "error",
+				"noUselessConstructor": "error",
+				"noUselessContinue": "error",
+				"noUselessEmptyExport": "error",
+				"noUselessEscapeInRegex": "error",
+				"noUselessFragments": "error",
+				"noUselessLabel": "error",
+				"noUselessRename": "error",
+				"noUselessStringConcat": "error",
+				"noUselessStringRaw": "error",
+				"noUselessSwitchCase": "error",
+				"noUselessThisAlias": "error",
+				"noUselessTypeConstraint": "error",
+				"noUselessUndefined": "error",
+				"noUselessUndefinedInitialization": "error",
+				"useDateNow": "error",
+				"useIndexOf": "error",
+				"useNumericLiterals": "error",
+				"useRegexLiterals": "error",
+				"useSimpleNumberKeys": "error"
+			},
+			"security": {
+				"noSecrets": "error",
+				"noBlankTarget": "error"
+			},
+			"performance": {
+				"noAccumulatingSpread": "error",
+				"noBarrelFile": "error",
+				"noAwaitInLoops": "error",
+				"noDelete": "error",
+				"noNamespaceImport": "error",
+				"noReExportAll": "error",
+				"useTopLevelRegex": "error",
+				"noDynamicNamespaceImportAccess": "error"
+			},
+			"nursery": {
+				"noInlineStyles": "error",
+				"useSortedClasses": "error",
+				"noTernary": "off",
+				"useExhaustiveSwitchCases": "error",
+				"useAwaitThenable": "error",
+				"useErrorCause": "error",
+				"useArraySome": "error",
+				"useFind": "error",
+				"useNullishCoalescing": "error",
+				"useStringStartsEndsWith": "error",
+				"useGlobalThis": "error",
+				"useSpread": "error",
+				"useRegexpTest": "error",
+				"useRegexpExec": "error",
+				"useMathMinMax": "error",
+				"useDomQuerySelector": "error",
+				"useDomNodeTextContent": "error",
+				"noComponentHookFactories": "error",
+				"noShadow": "error",
+				"noFloatingPromises": "error",
+				"noMisusedPromises": "error",
+				"noUselessTypeConversion": "error",
+				"noExcessiveNestedCallbacks": "error",
+				"noExcessiveClassesPerFile": "error",
+				"noExcessiveLinesPerFile": {
+					"level": "error",
+					"options": {
+						"maxLines": 400,
+						"skipBlankLines": true
+					}
+				},
+				"useExplicitType": "error",
+				"useExplicitReturnType": "error",
+				"useConsistentTestIt": "error",
+				"useConsistentEnumValueType": "error",
+				"useDisposables": "error",
+				"useConsistentMethodSignatures": "error",
+				"noUndeclaredEnvVars": "error",
+				"noConditionalExpect": "error",
+				"noIdenticalTestTitle": "error",
+				"useExpect": "error",
+				"useTestHooksInOrder": "error",
+				"useTestHooksOnTop": "error",
+				"useArraySortCompare": "error",
+				"noUnnecessaryConditions": "error",
+				"noUnsafePlusOperands": "error",
+				"noBaseToString": "error",
+				"noForIn": "error",
+				"noIncrementDecrement": "error",
+				"noJsxPropsBind": "error",
+				"noMisleadingReturnType": "error",
+				"noNestedPromises": "error",
+				"noReturnAssign": "error",
+				"noScriptUrl": "error",
+				"useDestructuring": "error",
+				"useImportsFirst": "error"
 			}
 		}
 	},
+	"plugins": [
+		"./src/config/biome/rules/no_inline_if.grit",
+		"./src/config/biome/rules/no_hardcoded_colors.grit",
+		"./src/config/biome/rules/test_naming.grit",
+		"./src/config/biome/rules/prefer_testid.grit",
+		"./src/config/biome/rules/max_nesting_depth.grit",
+		"./src/config/biome/rules/drizzle_fk_index.grit",
+		"./src/config/biome/rules/drizzle_no_relations.grit",
+		"./src/config/biome/rules/no_empty_catch.grit",
+		"./src/config/biome/rules/no_throwing_non_error.grit"
+	],
 	"assist": {
 		"actions": {
 			"source": {

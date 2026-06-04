@@ -73,7 +73,14 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 			dryRun
 		})
 
-		const label = result.written ? '  ✓' : dryRun ? '  [dry-run]' : '  -'
+		let label: string
+		if (result.written) {
+			label = '  ✓'
+		} else if (dryRun) {
+			label = '  [dry-run]'
+		} else {
+			label = '  -'
+		}
 		deps.log(`${label} ${result.targetPath}`)
 
 		return result

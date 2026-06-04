@@ -26,15 +26,15 @@ describe('package.json exports', () => {
 	})
 
 	it('exports values resolve to existing source files', () => {
-		const biomeExport = PACKAGE_JSON.exports['./biome']
-		const tsExport = PACKAGE_JSON.exports['./tsconfig/base']
+		const biome_export = PACKAGE_JSON.exports['./biome']
+		const ts_export = PACKAGE_JSON.exports['./tsconfig/base']
 
 		// Biome export should point to a .json file under src/config/biome
-		expect(typeof biomeExport).toBe('string')
-		expect(biomeExport).toMatch(/^\.\/src\/config\/biome\//)
+		expect(typeof biome_export).toBe('string')
+		expect(biome_export).toMatch(/^\.\/src\/config\/biome\//)
 
 		// TypeScript export should point to a .json file under src/config/tsconfig
-		expect(typeof tsExport).toBe('string')
-		expect(tsExport).toMatch(/^\.\/src\/config\/tsconfig\//)
+		expect(typeof ts_export).toBe('string')
+		expect(ts_export).toMatch(/^\.\/src\/config\/tsconfig\//)
 	})
 })

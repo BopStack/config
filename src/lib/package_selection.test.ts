@@ -48,7 +48,7 @@ describe('package_selection', () => {
 
 	it('get_config_files does not contain old out-of-scope entries', () => {
 		const files = get_config_files('default')
-		const oldPackages = [
+		const old_packages = [
 			'@bopstack/tsconfig',
 			'@bopstack/oxfmt',
 			'@bopstack/oxlint',
@@ -60,7 +60,7 @@ describe('package_selection', () => {
 			'@bopstack/custom-lint',
 			'@bopstack/git-hook'
 		]
-		for (const pkg of oldPackages) {
+		for (const pkg of old_packages) {
 			expect(files.some((f) => f.packageName === pkg)).toBe(false)
 		}
 	})

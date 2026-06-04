@@ -8,9 +8,9 @@
  */
 
 import { execSync } from 'node:child_process'
-import { mkdtempSync, writeFileSync, mkdirSync, symlinkSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+import { mkdirSync, mkdtempSync, symlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { describe, expect, it } from 'vitest'
@@ -60,7 +60,7 @@ function run_as_consumer(fixture_code: string, fixture_name: string): string {
 		}
 	} finally {
 		try {
-			execSync(`rm -rf "${tmp_dir}"`, { encoding: 'utf-8', timeout: 5_000 })
+			execSync(`rm -rf "${tmp_dir}"`, { encoding: 'utf-8', timeout: 5000 })
 		} catch {
 			// cleanup best-effort
 		}

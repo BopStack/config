@@ -96,7 +96,7 @@ export function copy_config_file(options: CopyFileOptions): CopyFileResult | nul
 		sourceFileName
 	)
 
-	if (!sourcePath && !existing) {
+	if (!(sourcePath || existing)) {
 		console.warn(`[skip] source not found for ${fileEntry.packageName}/${sourceFileName}`)
 		return null
 	}

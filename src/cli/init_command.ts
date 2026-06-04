@@ -32,6 +32,8 @@ function report_error(error: InitError): void {
 			console.error('Package installation failed:')
 			console.error(error.stderr)
 			break
+		default:
+			console.error(`Unhandled error kind: ${error satisfies never}`)
 	}
 }
 
@@ -56,8 +58,8 @@ function install_packages(
 /**
  * Init command handler — entry point from CLI router.
  */
-export async function init(rawArgs: string[]): Promise<void> {
-	const parsed = parse_init_args(rawArgs, { cwd: process.cwd() })
+export async function init(raw_args: string[]): Promise<void> {
+	const parsed = parse_init_args(raw_args, { cwd: process.cwd() })
 
 	if (!parsed.ok) {
 		report_error(parsed.error)

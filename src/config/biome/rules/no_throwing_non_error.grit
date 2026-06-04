@@ -1,0 +1,13 @@
+or {
+	`throw "$_"`,
+	`throw '$_'`,
+	`throw \`$_\``,
+	`throw null`,
+	`throw undefined`,
+	`throw true`,
+	`throw false`,
+	`throw { $_ }`,
+	`throw [$_]`
+} as $stmt where {
+	register_diagnostic(span=$stmt, message="Only throw Error (or subclass) instances. Primitive values lose stack traces and are harder to debug.", severity="error")
+}

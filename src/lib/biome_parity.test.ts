@@ -11,19 +11,19 @@
 
 import { execSync } from 'node:child_process'
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
-import { join, dirname } from 'node:path'
 import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 import { describe, expect, it } from 'vitest'
 
 const PACKAGE_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const BIOME_CONFIG_PATH = join(PACKAGE_DIR, 'src', 'config', 'biome', 'biome-config.json')
-const biomeConfig: Record<string, unknown> = JSON.parse(readFileSync(BIOME_CONFIG_PATH, 'utf-8'))
-const formatter = biomeConfig.formatter as Record<string, unknown> | undefined
-const linter = biomeConfig.linter as Record<string, unknown> | undefined
+const biome_config: Record<string, unknown> = JSON.parse(readFileSync(BIOME_CONFIG_PATH, 'utf-8'))
+const formatter = biome_config.formatter as Record<string, unknown> | undefined
+const linter = biome_config.linter as Record<string, unknown> | undefined
 const rules = linter?.rules as Record<string, unknown> | undefined
-const plugins = biomeConfig.plugins as string[] | undefined
+const plugins = biome_config.plugins as string[] | undefined
 
 function lint_rules(category: string): Record<string, unknown> | undefined {
 	return rules?.[category] as Record<string, unknown> | undefined
@@ -49,24 +49,24 @@ describe('biome formatter parity with oxfmt', () => {
 	})
 
 	it('given oxfmt singleQuote: should use quoteStyle single', () => {
-		const jsConfig = biomeConfig.javascript as Record<string, unknown> | undefined
-		const jsFormatter = jsConfig?.formatter as Record<string, unknown> | undefined
-		expect(jsFormatter).toBeDefined()
-		expect((jsFormatter as Record<string, unknown>).quoteStyle).toBe('single')
+		const js_config = biome_config.javascript as Record<string, unknown> | undefined
+		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
+		expect(js_formatter).toBeDefined()
+		expect((js_formatter as Record<string, unknown>).quoteStyle).toBe('single')
 	})
 
 	it('given oxfmt semi false: should use semicolons asNeeded', () => {
-		const jsConfig = biomeConfig.javascript as Record<string, unknown> | undefined
-		const jsFormatter = jsConfig?.formatter as Record<string, unknown> | undefined
-		expect(jsFormatter).toBeDefined()
-		expect((jsFormatter as Record<string, unknown>).semicolons).toBe('asNeeded')
+		const js_config = biome_config.javascript as Record<string, unknown> | undefined
+		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
+		expect(js_formatter).toBeDefined()
+		expect((js_formatter as Record<string, unknown>).semicolons).toBe('asNeeded')
 	})
 
 	it('given oxfmt trailingComma none: should use trailingCommas none', () => {
-		const jsConfig = biomeConfig.javascript as Record<string, unknown> | undefined
-		const jsFormatter = jsConfig?.formatter as Record<string, unknown> | undefined
-		expect(jsFormatter).toBeDefined()
-		expect((jsFormatter as Record<string, unknown>).trailingCommas).toBe('none')
+		const js_config = biome_config.javascript as Record<string, unknown> | undefined
+		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
+		expect(js_formatter).toBeDefined()
+		expect((js_formatter as Record<string, unknown>).trailingCommas).toBe('none')
 	})
 
 	it('given oxfmt printWidth 100: should use lineWidth 100', () => {
@@ -75,7 +75,7 @@ describe('biome formatter parity with oxfmt', () => {
 	})
 
 	it('given oxfmt sortImports: should have organizeImports assist action enabled', () => {
-		const assist = biomeConfig.assist as Record<string, unknown> | undefined
+		const assist = biome_config.assist as Record<string, unknown> | undefined
 		const actions = assist?.actions as Record<string, unknown> | undefined
 		const source = actions?.source as Record<string, unknown> | undefined
 		expect(source).toBeDefined()
@@ -110,8 +110,8 @@ describe('biome native rule parity with oxlint config', () => {
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).useMaxParams
 		expect(rule).toBeDefined()
-		const ruleObj = rule as Record<string, unknown>
-		const opts = ruleObj.options as Record<string, unknown> | undefined
+		const rule_obj = rule as Record<string, unknown>
+		const opts = rule_obj.options as Record<string, unknown> | undefined
 		expect(opts).toBeDefined()
 		expect((opts as Record<string, unknown>).max).toBe(3)
 	})
@@ -212,8 +212,8 @@ describe('biome native rule parity with FFB biome.json', () => {
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).noExcessiveCognitiveComplexity
 		expect(rule).toBeDefined()
-		const ruleObj = rule as Record<string, unknown>
-		const opts = ruleObj.options as Record<string, unknown> | undefined
+		const rule_obj = rule as Record<string, unknown>
+		const opts = rule_obj.options as Record<string, unknown> | undefined
 		expect(opts).toBeDefined()
 		expect((opts as Record<string, unknown>).maxAllowedComplexity).toBe(15)
 	})
@@ -223,8 +223,8 @@ describe('biome native rule parity with FFB biome.json', () => {
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).noExcessiveLinesPerFunction
 		expect(rule).toBeDefined()
-		const ruleObj = rule as Record<string, unknown>
-		const opts = ruleObj.options as Record<string, unknown> | undefined
+		const rule_obj = rule as Record<string, unknown>
+		const opts = rule_obj.options as Record<string, unknown> | undefined
 		expect(opts).toBeDefined()
 		expect((opts as Record<string, unknown>).maxLines).toBe(80)
 		expect((opts as Record<string, unknown>).skipBlankLines).toBe(true)
@@ -271,8 +271,8 @@ describe('biome native rule parity with OXC plugin rules', () => {
 	it('given OXC no-ts-ignore: should have suspicious noTsIgnore via recommended', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
-		// noTsIgnore is "error" via recommended — not explicitly listed
-		expect((suspicious as Record<string, unknown>).noTsIgnore).toBeUndefined()
+		// noTsIgnore is now explicitly listed as "error"
+		expect((suspicious as Record<string, unknown>).noTsIgnore).toBe('error')
 	})
 })
 
@@ -309,8 +309,8 @@ describe('biome Grit plugin registration', () => {
 
 	it('given no-console is native: should not have no-console.grit in plugins', () => {
 		expect(plugins).toBeDefined()
-		const noConsolePlugin = (plugins as string[]).find((p) => p.includes('no-console.grit'))
-		expect(noConsolePlugin).toBeUndefined()
+		const no_console_plugin = (plugins as string[]).find((p) => p.includes('no-console.grit'))
+		expect(no_console_plugin).toBeUndefined()
 	})
 })
 
@@ -357,7 +357,7 @@ function run_lint_on_fixture(fixture_code: string, fixture_name: string): string
 		}
 	} finally {
 		try {
-			execSync(`rm -rf "${tmp_dir}"`, { encoding: 'utf-8', timeout: 5_000 })
+			execSync(`rm -rf "${tmp_dir}"`, { encoding: 'utf-8', timeout: 5000 })
 		} catch {
 			// cleanup best-effort
 		}

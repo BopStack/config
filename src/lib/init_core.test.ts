@@ -24,10 +24,7 @@ describe('run_init_core', () => {
 
 		expect(result.ok).toBe(false)
 		if (!result.ok) {
-			expect(result.error.kind).toBe('target_missing')
-			if (result.error.kind === 'target_missing') {
-				expect(result.error.target).toBe('/nonexistent')
-			}
+			expect(result.error).toMatchObject({ kind: 'target_missing', target: '/nonexistent' })
 		}
 	})
 
@@ -40,11 +37,11 @@ describe('run_init_core', () => {
 
 		expect(result.ok).toBe(false)
 		if (!result.ok) {
-			expect(result.error.kind).toBe('install_failed')
-			if (result.error.kind === 'install_failed') {
-				expect(result.error.stderr).toBe('mock failure')
-				expect(result.error.status).toBe(42)
-			}
+			expect(result.error).toMatchObject({
+				kind: 'install_failed',
+				stderr: 'mock failure',
+				status: 42
+			})
 		}
 	})
 
