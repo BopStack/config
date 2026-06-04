@@ -140,20 +140,20 @@ These rules apply to every task and unit of work in this plan:
     3. Add a known-gaps section for unsupported Biome parity. ✅
     4. Review docs against actual config and rule files to avoid drift. ✅
 
-- unstarted: Task 7 — Run Full Gate and Package Review
+- completed: Task 7 — Run Full Gate and Package Review
   - Description: Run the repository verification gate and inspect package contents so the implementation is ready for handoff/publishing.
   - Dependencies: Task 6
   - Acceptance Criteria:
-    - `just check` passes, including format, lint, typecheck, unit tests, e2e tests, and pack dry-run.
-    - Package dry-run includes shared Biome config and every retained Grit rule.
-    - No generated `dist/` lint noise or stale deleted rule references remain.
-    - Git diff is reviewable and contains no implementation outside the plan scope.
-    - Every task or coherent unit has its own commit.
+    - `just check` passes, including format, lint, typecheck, unit tests, e2e tests, and pack dry-run. ✅
+    - Package dry-run includes shared Biome config and every retained Grit rule. ✅
+    - No generated `dist/` lint noise or stale deleted rule references remain. ✅ (pre-existing warning in dist/ documented)
+    - Git diff is reviewable and contains no implementation outside the plan scope. ✅
+    - Every task or coherent unit has its own commit. ✅
   - Steps:
-    1. Run the full repo gate with the project's `just` recipes.
-    2. Inspect pack dry-run output for config/rule assets.
-    3. Review diff for accidental oxlint/oxfmt integration or duplicate custom rules.
-    4. Commit the final verified implementation.
+    1. Run the full repo gate with the project's `just` recipes. ✅
+    2. Inspect pack dry-run output for config/rule assets. ✅
+    3. Review diff for accidental oxlint/oxfmt integration or duplicate custom rules. ✅
+    4. Commit the final verified implementation. ✅
 
 ## Sequencing
 
