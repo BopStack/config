@@ -28,7 +28,7 @@ test-e2e:
 e2e: test-e2e
 
 pack: build
-    pnpm pack --dry-run
+    pnpm pack --pack-destination /tmp/bopstack-pack-test --json 2>&1 && echo 'pack ok' && rm -rf /tmp/bopstack-pack-test
 
 publish-dry-run: build
     pnpm publish --dry-run

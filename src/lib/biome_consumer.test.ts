@@ -8,8 +8,8 @@
  */
 
 import { execSync } from 'node:child_process'
-import { mkdtempSync, writeFileSync, readFileSync, mkdirSync, symlinkSync, existsSync } from 'node:fs'
-import { join, dirname, relative } from 'node:path'
+import { mkdtempSync, writeFileSync, mkdirSync, symlinkSync } from 'node:fs'
+import { join, dirname } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
 
@@ -35,10 +35,10 @@ function run_as_consumer(fixture_code: string, fixture_name: string): string {
 			{
 				$schema: 'https://biomejs.dev/schemas/2.4.16/schema.json',
 				root: true,
-				extends: ['@bopstack/config/biome'],
+				extends: ['@bopstack/config/biome']
 			},
 			null,
-			2,
+			2
 		)
 		writeFileSync(join(tmp_dir, 'biome.json'), biome_json)
 
@@ -51,7 +51,7 @@ function run_as_consumer(fixture_code: string, fixture_name: string): string {
 			return execSync(`"${BIOME_BIN}" lint --reporter json "${fixture_path}"`, {
 				cwd: tmp_dir,
 				encoding: 'utf-8',
-				timeout: 15_000,
+				timeout: 15_000
 			})
 		} catch (e) {
 			// biome exits with code 1 when diagnostics are emitted

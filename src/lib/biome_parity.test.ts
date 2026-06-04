@@ -10,7 +10,7 @@
  */
 
 import { execSync } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fileURLToPath } from 'node:url'
@@ -19,9 +19,7 @@ import { describe, expect, it } from 'vitest'
 
 const PACKAGE_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const BIOME_CONFIG_PATH = join(PACKAGE_DIR, 'src', 'config', 'biome', 'biome-config.json')
-const biomeConfig: Record<string, unknown> = JSON.parse(
-	readFileSync(BIOME_CONFIG_PATH, 'utf-8'),
-)
+const biomeConfig: Record<string, unknown> = JSON.parse(readFileSync(BIOME_CONFIG_PATH, 'utf-8'))
 const formatter = biomeConfig.formatter as Record<string, unknown> | undefined
 const linter = biomeConfig.linter as Record<string, unknown> | undefined
 const rules = linter?.rules as Record<string, unknown> | undefined
@@ -298,24 +296,20 @@ describe('biome Grit plugin registration', () => {
 		'prefer_testid',
 		'max_nesting_depth',
 		'drizzle_fk_index',
-		'drizzle_no_relations',
+		'drizzle_no_relations'
 	]
 
 	for (const rule of expected_rules) {
 		it(`given ${rule} needs Grit: should register ${rule}.grit`, () => {
 			expect(plugins).toBeDefined()
-			const matched = (plugins as string[]).filter((p) =>
-				p.includes(`${rule}.grit`),
-			)
+			const matched = (plugins as string[]).filter((p) => p.includes(`${rule}.grit`))
 			expect(matched.length).toBeGreaterThanOrEqual(1)
 		})
 	}
 
 	it('given no-console is native: should not have no-console.grit in plugins', () => {
 		expect(plugins).toBeDefined()
-		const noConsolePlugin = (plugins as string[]).find((p) =>
-			p.includes('no-console.grit'),
-		)
+		const noConsolePlugin = (plugins as string[]).find((p) => p.includes('no-console.grit'))
 		expect(noConsolePlugin).toBeUndefined()
 	})
 })
@@ -327,10 +321,7 @@ describe('biome Grit plugin registration', () => {
  * biome config, rewriting plugin paths to absolute paths so they resolve
  * correctly regardless of the working directory.
  */
-function run_lint_on_fixture(
-	fixture_code: string,
-	fixture_name: string,
-): string {
+function run_lint_on_fixture(fixture_code: string, fixture_name: string): string {
 	const tmp_dir = mkdtempSync(join(tmpdir(), 'biome-parity-'))
 	try {
 		// Copy shared biome config into the temp dir, with absolute plugin paths
@@ -340,7 +331,7 @@ function run_lint_on_fixture(
 		const rules_dir = join(PACKAGE_DIR, 'src', 'config', 'biome', 'rules')
 		config = config.replaceAll(
 			'./node_modules/@bopstack/config/src/config/biome/rules/',
-			`${rules_dir}/`,
+			`${rules_dir}/`
 		)
 		writeFileSync(join(tmp_dir, 'biome.json'), config)
 
@@ -355,8 +346,8 @@ function run_lint_on_fixture(
 				{
 					cwd: tmp_dir,
 					encoding: 'utf-8',
-					timeout: 15_000,
-				},
+					timeout: 15_000
+				}
 			)
 		} catch (e) {
 			// biome exits with code 1 when diagnostics are emitted;
