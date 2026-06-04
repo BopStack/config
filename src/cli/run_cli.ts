@@ -8,6 +8,7 @@
 import { exit } from 'node:process'
 
 import { init } from './init_command.js'
+import { lint } from './lint_command.js'
 
 /**
  * Run the CLI with the given arguments.
@@ -20,6 +21,18 @@ export function run_cli(argv: string[]): void {
 			case 'init':
 				await init(args)
 				break
+			case 'lint': {
+				const result = await lint(args)
+				for (const msg of result.messages) {
+					if (result.code !== 0) {
+						console.error(msg)
+					} else {
+						console.log(msg)
+					}
+				}
+				exit(result.code)
+				break
+			}
 			case '--help':
 			case '-h':
 			case undefined:
@@ -30,6 +43,9 @@ Commands:
            --target=<path>    Target project directory (default: cwd)
            --kind=<type>      Project kind (default: "default")
            --dry-run          Preview changes without writing
+  lint     Run a named lint check.
+           bopstack-config lint check-justfile-syntax <path>
+           bopstack-config lint check-no-coauthor <path>
 `)
 				break
 			default:

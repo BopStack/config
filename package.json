@@ -29,6 +29,18 @@
 		},
 		"./biome": "./src/config/biome/biome-config.json",
 		"./tsconfig/base": "./src/config/tsconfig/base.json",
+		"./lint": {
+			"types": "./dist/lint/index.d.ts",
+			"default": "./dist/lint/index.js"
+		},
+		"./lint/check-justfile-syntax": {
+			"types": "./dist/lint/check_justfile_syntax.d.ts",
+			"default": "./dist/lint/check_justfile_syntax.js"
+		},
+		"./lint/check-no-coauthor": {
+			"types": "./dist/lint/check_no_coauthor.d.ts",
+			"default": "./dist/lint/check_no_coauthor.js"
+		},
 		"./package.json": "./package.json"
 	},
 	"files": [
