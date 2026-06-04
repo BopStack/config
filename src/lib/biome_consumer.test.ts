@@ -13,7 +13,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 const PACKAGE_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const BIOME_BIN = join(PACKAGE_DIR, 'node_modules', '.bin', 'biome')
@@ -68,14 +68,14 @@ function run_as_consumer(fixture_code: string, fixture_name: string): string {
 }
 
 describe('consumer extending @bopstack/config/biome', () => {
-	it('given a fixture with console.log: should trigger native noConsole diagnostic', () => {
+	test('given a fixture with console.log: should trigger native noConsole diagnostic', () => {
 		const code = `console.log("hello");`
 		const output = run_as_consumer(code, 'no_console.ts')
 		expect(output).toContain('noConsole')
 		expect(output).toContain('lint/suspicious/noConsole')
 	})
 
-	it('given a fixture with inline if body: should trigger Grit no_inline_if diagnostic', () => {
+	test('given a fixture with inline if body: should trigger Grit no_inline_if diagnostic', () => {
 		const code = `
 function example(x: number) {
   if (x > 0) console.log();
@@ -86,7 +86,7 @@ function example(x: number) {
 		expect(output).toContain('Use braces')
 	})
 
-	it('given a fixture with nested if: should trigger Grit max_nesting_depth diagnostic', () => {
+	test('given a fixture with nested if: should trigger Grit max_nesting_depth diagnostic', () => {
 		const code = `
 function example(x: number, y: number) {
   if (x > 0) {
@@ -101,7 +101,7 @@ function example(x: number, y: number) {
 		expect(output).toContain('Maximum nesting depth')
 	})
 
-	it('given a passing fixture (braces on if): should not trigger Grit no_inline_if', () => {
+	test('given a passing fixture (braces on if): should not trigger Grit no_inline_if', () => {
 		const code = `
 function example(x: number) {
   if (x > 0) {

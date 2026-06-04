@@ -2,7 +2,7 @@
  * Tests for init orchestration core.
  */
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import type { InitDeps } from './init_core.js'
 import { run_init_core } from './init_core.js'
 
@@ -18,7 +18,7 @@ function create_mock_deps(overrides: Partial<InitDeps> = {}): InitDeps {
 }
 
 describe('run_init_core', () => {
-	it('returns target_missing error when target does not exist', () => {
+	test('returns target_missing error when target does not exist', () => {
 		const deps = create_mock_deps({ exists: () => false })
 		const result = run_init_core({ target: '/nonexistent', kind: 'default', dryRun: true }, deps)
 
@@ -28,7 +28,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	it('returns install_failed error when install fails', () => {
+	test('returns install_failed error when install fails', () => {
 		const deps = create_mock_deps({
 			install: () => ({ status: 42, stderr: 'mock failure' })
 		})
@@ -45,7 +45,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	it('returns ok with packageCount on successful dry-run', () => {
+	test('returns ok with packageCount on successful dry-run', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: true },
 			create_mock_deps()
@@ -57,7 +57,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	it('returns ok on successful install', () => {
+	test('returns ok on successful install', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: false },
 			create_mock_deps()
@@ -69,7 +69,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	it('calls log and warn deps', () => {
+	test('calls log and warn deps', () => {
 		const logs: string[] = []
 		const warns: string[] = []
 

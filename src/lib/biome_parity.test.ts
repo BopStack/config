@@ -15,7 +15,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 const PACKAGE_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const BIOME_CONFIG_PATH = join(PACKAGE_DIR, 'src', 'config', 'biome', 'biome-config.json')
@@ -43,38 +43,38 @@ function assert_is_error(value: unknown): void {
 // ── Formatter parity with oxfmt ────────────────────────────────────────────
 
 describe('biome formatter parity with oxfmt', () => {
-	it('given oxfmt useTabs: should use indentStyle tab', () => {
+	test('given oxfmt useTabs: should use indentStyle tab', () => {
 		expect(formatter).toBeDefined()
 		expect((formatter as Record<string, unknown>).indentStyle).toBe('tab')
 	})
 
-	it('given oxfmt singleQuote: should use quoteStyle single', () => {
+	test('given oxfmt singleQuote: should use quoteStyle single', () => {
 		const js_config = biome_config.javascript as Record<string, unknown> | undefined
 		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
 		expect(js_formatter).toBeDefined()
 		expect((js_formatter as Record<string, unknown>).quoteStyle).toBe('single')
 	})
 
-	it('given oxfmt semi false: should use semicolons asNeeded', () => {
+	test('given oxfmt semi false: should use semicolons asNeeded', () => {
 		const js_config = biome_config.javascript as Record<string, unknown> | undefined
 		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
 		expect(js_formatter).toBeDefined()
 		expect((js_formatter as Record<string, unknown>).semicolons).toBe('asNeeded')
 	})
 
-	it('given oxfmt trailingComma none: should use trailingCommas none', () => {
+	test('given oxfmt trailingComma none: should use trailingCommas none', () => {
 		const js_config = biome_config.javascript as Record<string, unknown> | undefined
 		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
 		expect(js_formatter).toBeDefined()
 		expect((js_formatter as Record<string, unknown>).trailingCommas).toBe('none')
 	})
 
-	it('given oxfmt printWidth 100: should use lineWidth 100', () => {
+	test('given oxfmt printWidth 100: should use lineWidth 100', () => {
 		expect(formatter).toBeDefined()
 		expect((formatter as Record<string, unknown>).lineWidth).toBe(100)
 	})
 
-	it('given oxfmt sortImports: should have organizeImports assist action enabled', () => {
+	test('given oxfmt sortImports: should have organizeImports assist action enabled', () => {
 		const assist = biome_config.assist as Record<string, unknown> | undefined
 		const actions = assist?.actions as Record<string, unknown> | undefined
 		const source = actions?.source as Record<string, unknown> | undefined
@@ -86,26 +86,26 @@ describe('biome formatter parity with oxfmt', () => {
 // ── Native rule parity with oxlint config ──────────────────────────────────
 
 describe('biome native rule parity with oxlint config', () => {
-	it('given oxlint no-console: should have suspicious noConsole rule', () => {
+	test('given oxlint no-console: should have suspicious noConsole rule', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		assert_is_error((suspicious as Record<string, unknown>).noConsole)
 	})
 
-	it('given oxlint no-debugger: should be error via recommended', () => {
+	test('given oxlint no-debugger: should be error via recommended', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		// noDebugger is "error" via recommended — not explicitly listed
 		expect((suspicious as Record<string, unknown>).noDebugger).toBeUndefined()
 	})
 
-	it('given oxlint no-explicit-any: should have suspicious noExplicitAny rule', () => {
+	test('given oxlint no-explicit-any: should have suspicious noExplicitAny rule', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		assert_is_error((suspicious as Record<string, unknown>).noExplicitAny)
 	})
 
-	it('given oxlint max-params 3: should have complexity useMaxParams with max 3', () => {
+	test('given oxlint max-params 3: should have complexity useMaxParams with max 3', () => {
 		const complexity = lint_rules('complexity')
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).useMaxParams
@@ -116,25 +116,25 @@ describe('biome native rule parity with oxlint config', () => {
 		expect((opts as Record<string, unknown>).max).toBe(3)
 	})
 
-	it('given oxlint no-nested-ternary: should have style noNestedTernary rule', () => {
+	test('given oxlint no-nested-ternary: should have style noNestedTernary rule', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).noNestedTernary)
 	})
 
-	it('given oxlint curly all: should have style useBlockStatements rule', () => {
+	test('given oxlint curly all: should have style useBlockStatements rule', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).useBlockStatements)
 	})
 
-	it('given oxlint import/no-cycle: should have suspicious noImportCycles rule', () => {
+	test('given oxlint import/no-cycle: should have suspicious noImportCycles rule', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		assert_is_error((suspicious as Record<string, unknown>).noImportCycles)
 	})
 
-	it('given oxlint filename-case snakeCase: should be documented as a known gap (not in shared config)', () => {
+	test('given oxlint filename-case snakeCase: should be documented as a known gap (not in shared config)', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		// useFilenamingConvention is intentionally omitted —
@@ -147,67 +147,67 @@ describe('biome native rule parity with oxlint config', () => {
 // ── Native rule parity with FFB biome.json ─────────────────────────────────
 
 describe('biome native rule parity with FFB biome.json', () => {
-	it('given FFB noUnusedVariables: should have correctness noUnusedVariables', () => {
+	test('given FFB noUnusedVariables: should have correctness noUnusedVariables', () => {
 		const correctness = lint_rules('correctness')
 		expect(correctness).toBeDefined()
 		assert_is_error((correctness as Record<string, unknown>).noUnusedVariables)
 	})
 
-	it('given FFB noUnusedImports: should have correctness noUnusedImports', () => {
+	test('given FFB noUnusedImports: should have correctness noUnusedImports', () => {
 		const correctness = lint_rules('correctness')
 		expect(correctness).toBeDefined()
 		assert_is_error((correctness as Record<string, unknown>).noUnusedImports)
 	})
 
-	it('given FFB useExhaustiveDependencies: should have correctness useExhaustiveDependencies', () => {
+	test('given FFB useExhaustiveDependencies: should have correctness useExhaustiveDependencies', () => {
 		const correctness = lint_rules('correctness')
 		expect(correctness).toBeDefined()
 		assert_is_error((correctness as Record<string, unknown>).useExhaustiveDependencies)
 	})
 
-	it('given FFB noNestedComponentDefinitions: should have correctness noNestedComponentDefinitions with error', () => {
+	test('given FFB noNestedComponentDefinitions: should have correctness noNestedComponentDefinitions with error', () => {
 		const correctness = lint_rules('correctness')
 		expect(correctness).toBeDefined()
 		assert_is_error((correctness as Record<string, unknown>).noNestedComponentDefinitions)
 	})
 
-	it('given FFB noUselessElse: should have style noUselessElse', () => {
+	test('given FFB noUselessElse: should have style noUselessElse', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).noUselessElse)
 	})
 
-	it('given FFB noMagicNumbers: should have style noMagicNumbers', () => {
+	test('given FFB noMagicNumbers: should have style noMagicNumbers', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).noMagicNumbers)
 	})
 
-	it('given FFB noInferrableTypes: should have style noInferrableTypes', () => {
+	test('given FFB noInferrableTypes: should have style noInferrableTypes', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).noInferrableTypes)
 	})
 
-	it('given FFB useCollapsedIf: should have style useCollapsedIf', () => {
+	test('given FFB useCollapsedIf: should have style useCollapsedIf', () => {
 		const style = lint_rules('style')
 		expect(style).toBeDefined()
 		assert_is_error((style as Record<string, unknown>).useCollapsedIf)
 	})
 
-	it('given FFB noForEach: should have complexity noForEach', () => {
+	test('given FFB noForEach: should have complexity noForEach', () => {
 		const complexity = lint_rules('complexity')
 		expect(complexity).toBeDefined()
 		assert_is_error((complexity as Record<string, unknown>).noForEach)
 	})
 
-	it('given FFB noImplicitCoercions: should have complexity noImplicitCoercions', () => {
+	test('given FFB noImplicitCoercions: should have complexity noImplicitCoercions', () => {
 		const complexity = lint_rules('complexity')
 		expect(complexity).toBeDefined()
 		assert_is_error((complexity as Record<string, unknown>).noImplicitCoercions)
 	})
 
-	it('given FFB noExcessiveCognitiveComplexity max 15: should have complexity noExcessiveCognitiveComplexity', () => {
+	test('given FFB noExcessiveCognitiveComplexity max 15: should have complexity noExcessiveCognitiveComplexity', () => {
 		const complexity = lint_rules('complexity')
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).noExcessiveCognitiveComplexity
@@ -218,7 +218,7 @@ describe('biome native rule parity with FFB biome.json', () => {
 		expect((opts as Record<string, unknown>).maxAllowedComplexity).toBe(15)
 	})
 
-	it('given FFB noExcessiveLinesPerFunction max 80: should have complexity noExcessiveLinesPerFunction', () => {
+	test('given FFB noExcessiveLinesPerFunction max 80: should have complexity noExcessiveLinesPerFunction', () => {
 		const complexity = lint_rules('complexity')
 		expect(complexity).toBeDefined()
 		const rule = (complexity as Record<string, unknown>).noExcessiveLinesPerFunction
@@ -231,7 +231,7 @@ describe('biome native rule parity with FFB biome.json', () => {
 		expect((opts as Record<string, unknown>).skipIifes).toBe(true)
 	})
 
-	it('given FFB performance rules: should have noAccumulatingSpread, noBarrelFile, noAwaitInLoops', () => {
+	test('given FFB performance rules: should have noAccumulatingSpread, noBarrelFile, noAwaitInLoops', () => {
 		const performance = lint_rules('performance')
 		expect(performance).toBeDefined()
 		assert_is_error((performance as Record<string, unknown>).noAccumulatingSpread)
@@ -239,20 +239,20 @@ describe('biome native rule parity with FFB biome.json', () => {
 		assert_is_error((performance as Record<string, unknown>).noAwaitInLoops)
 	})
 
-	it('given FFB security rules: should have noSecrets', () => {
+	test('given FFB security rules: should have noSecrets', () => {
 		const security = lint_rules('security')
 		expect(security).toBeDefined()
 		assert_is_error((security as Record<string, unknown>).noSecrets)
 		// noDangerouslySetInnerHtml is "error" via recommended — not explicitly listed
 	})
 
-	it('given FFB a11y: should be error via recommended', () => {
+	test('given FFB a11y: should be error via recommended', () => {
 		// a11y category is not in config because recommended: true handles it
 		const a11y = lint_rules('a11y')
 		expect(a11y).toBeUndefined()
 	})
 
-	it('given FFB no-empty-catch: should have suspicious noEmptyBlockStatements', () => {
+	test('given FFB no-empty-catch: should have suspicious noEmptyBlockStatements', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		assert_is_error((suspicious as Record<string, unknown>).noEmptyBlockStatements)
@@ -262,13 +262,13 @@ describe('biome native rule parity with FFB biome.json', () => {
 // ── OXC rule parity ────────────────────────────────────────────────────────
 
 describe('biome native rule parity with OXC plugin rules', () => {
-	it('given OXC/FFB no-inline-styles: should have nursery noInlineStyles', () => {
+	test('given OXC/FFB no-inline-styles: should have nursery noInlineStyles', () => {
 		const nursery = lint_rules('nursery')
 		expect(nursery).toBeDefined()
 		assert_is_error((nursery as Record<string, unknown>).noInlineStyles)
 	})
 
-	it('given OXC no-ts-ignore: should have suspicious noTsIgnore via recommended', () => {
+	test('given OXC no-ts-ignore: should have suspicious noTsIgnore via recommended', () => {
 		const suspicious = lint_rules('suspicious')
 		expect(suspicious).toBeDefined()
 		// noTsIgnore is now explicitly listed as "error"
@@ -279,7 +279,7 @@ describe('biome native rule parity with OXC plugin rules', () => {
 // ── Formatter parity beyond oxfmt base ─────────────────────────────────────
 
 describe('biome formatter parity with additional checks', () => {
-	it('given oxfmt sortTailwindcss: should have nursery useSortedClasses', () => {
+	test('given oxfmt sortTailwindcss: should have nursery useSortedClasses', () => {
 		const nursery = lint_rules('nursery')
 		expect(nursery).toBeDefined()
 		expect((nursery as Record<string, unknown>).useSortedClasses).toBeDefined()
@@ -300,14 +300,14 @@ describe('biome Grit plugin registration', () => {
 	]
 
 	for (const rule of expected_rules) {
-		it(`given ${rule} needs Grit: should register ${rule}.grit`, () => {
+		test(`given ${rule} needs Grit: should register ${rule}.grit`, () => {
 			expect(plugins).toBeDefined()
 			const matched = (plugins as string[]).filter((p) => p.includes(`${rule}.grit`))
 			expect(matched.length).toBeGreaterThanOrEqual(1)
 		})
 	}
 
-	it('given no-console is native: should not have no-console.grit in plugins', () => {
+	test('given no-console is native: should not have no-console.grit in plugins', () => {
 		expect(plugins).toBeDefined()
 		const no_console_plugin = (plugins as string[]).find((p) => p.includes('no-console.grit'))
 		expect(no_console_plugin).toBeUndefined()
@@ -367,7 +367,7 @@ function run_lint_on_fixture(fixture_code: string, fixture_name: string): string
 describe('custom Grit rules produce diagnostics on violating fixtures', () => {
 	// `no_inline_if`: violating fixture uses inline if body
 	// Expected: lint/plugins/no_inline_if diagnostic
-	it('given no_inline_if is registered: should flag inline if bodies', () => {
+	test('given no_inline_if is registered: should flag inline if bodies', () => {
 		const code = `
 function example(x: number) {
   if (x > 0) console.log();
@@ -381,7 +381,7 @@ function example(x: number) {
 
 	// `no_hardcoded_colors`: CSS with hardcoded colors
 	// Use a .css extension to trigger CSS parsing
-	it('given no_hardcoded_colors is registered: should flag hardcoded colors in CSS', () => {
+	test('given no_hardcoded_colors is registered: should flag hardcoded colors in CSS', () => {
 		const code = `a { color: #fff; }`
 		const output = run_lint_on_fixture(code, 'fixture_no_hardcoded_colors.css')
 		// Grit plugin diagnostics use category "plugin" — check message content
@@ -390,7 +390,7 @@ function example(x: number) {
 	})
 
 	// `max_nesting_depth`: two levels of if (violation)
-	it('given max_nesting_depth is registered: should flag deep nesting', () => {
+	test('given max_nesting_depth is registered: should flag deep nesting', () => {
 		const code = `
 function example(x: number, y: number) {
   if (x > 0) {
@@ -407,7 +407,7 @@ function example(x: number, y: number) {
 	})
 
 	// Passing fixture: `no_inline_if` with braces (should not flag)
-	it('given no_inline_if with braces: should not flag inline if', () => {
+	test('given no_inline_if with braces: should not flag inline if', () => {
 		const code = `
 function example(x: number) {
   if (x > 0) {

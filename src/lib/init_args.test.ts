@@ -2,12 +2,12 @@
  * Tests for init argument parsing.
  */
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 import { parse_init_args } from './init_args.js'
 
 describe('parse_init_args', () => {
-	it('defaults target to cwd when no --target', () => {
+	test('defaults target to cwd when no --target', () => {
 		const result = parse_init_args([], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(true)
 		if (!result.ok) {
@@ -18,7 +18,7 @@ describe('parse_init_args', () => {
 		expect(result.value.dryRun).toBe(false)
 	})
 
-	it('parses --target argument', () => {
+	test('parses --target argument', () => {
 		const result = parse_init_args(['--target=/custom/path'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(true)
 		if (!result.ok) {
@@ -27,7 +27,7 @@ describe('parse_init_args', () => {
 		expect(result.value.target).toBe('/custom/path')
 	})
 
-	it('parses --kind=default', () => {
+	test('parses --kind=default', () => {
 		const result = parse_init_args(['--kind=default'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(true)
 		if (!result.ok) {
@@ -36,7 +36,7 @@ describe('parse_init_args', () => {
 		expect(result.value.kind).toBe('default')
 	})
 
-	it('parses --dry-run', () => {
+	test('parses --dry-run', () => {
 		const result = parse_init_args(['--dry-run'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(true)
 		if (!result.ok) {
@@ -45,7 +45,7 @@ describe('parse_init_args', () => {
 		expect(result.value.dryRun).toBe(true)
 	})
 
-	it('rejects unknown project kind', () => {
+	test('rejects unknown project kind', () => {
 		const result = parse_init_args(['--kind=bogus'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(false)
 		if (result.ok) {
@@ -57,7 +57,7 @@ describe('parse_init_args', () => {
 		}
 	})
 
-	it('rejects unknown arguments', () => {
+	test('rejects unknown arguments', () => {
 		const result = parse_init_args(['--bogus'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(false)
 		if (result.ok) {
@@ -69,7 +69,7 @@ describe('parse_init_args', () => {
 		}
 	})
 
-	it('rejects multiple unknown arguments (first wins)', () => {
+	test('rejects multiple unknown arguments (first wins)', () => {
 		const result = parse_init_args(['--bogus', '--also-bogus'], { cwd: '/tmp/project' })
 		expect(result.ok).toBe(false)
 		if (result.ok) {
@@ -81,7 +81,7 @@ describe('parse_init_args', () => {
 		}
 	})
 
-	it('combines --target, --kind, --dry-run', () => {
+	test('combines --target, --kind, --dry-run', () => {
 		const result = parse_init_args(['--target=/x', '--kind=default', '--dry-run'], {
 			cwd: '/tmp/project'
 		})

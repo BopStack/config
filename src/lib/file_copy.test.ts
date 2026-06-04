@@ -6,7 +6,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 
-import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test } from 'vitest'
 import type { CopyFileResult } from './file_copy.js'
 import { compute_summary, copy_config_file } from './file_copy.js'
 
@@ -44,7 +44,7 @@ describe('copy_config_file', () => {
 		rmSync(modules_root, { recursive: true, force: true })
 	})
 
-	it('dry-run reports create without writing', () => {
+	test('dry-run reports create without writing', () => {
 		const result = copy_config_file({
 			targetDir: target_dir,
 			fileEntry: {
@@ -62,7 +62,7 @@ describe('copy_config_file', () => {
 		expect(existsSync(join(target_dir, '.lefthook.yml'))).toBe(false)
 	})
 
-	it('dry-run reports overwrite when target exists', () => {
+	test('dry-run reports overwrite when target exists', () => {
 		// Create target file first
 		mkdirSync(target_dir, { recursive: true })
 		writeFileSync(join(target_dir, '.lefthook.yml'), 'existing content', 'utf-8')
@@ -83,7 +83,7 @@ describe('copy_config_file', () => {
 		expect(result!.existing).toBe(true)
 	})
 
-	it('copies from root node_modules candidate', () => {
+	test('copies from root node_modules candidate', () => {
 		create_package_fixture(modules_root, '@bopstack/tsconfig', 'tsconfig.base.json', '')
 		const result = copy_config_file({
 			targetDir: target_dir,
@@ -102,7 +102,7 @@ describe('copy_config_file', () => {
 		expect(existsSync(join(target_dir, 'tsconfig.base.json'))).toBe(true)
 	})
 
-	it('copies from src/ candidate', () => {
+	test('copies from src/ candidate', () => {
 		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'src')
 		const result = copy_config_file({
 			targetDir: target_dir,
@@ -120,7 +120,7 @@ describe('copy_config_file', () => {
 		expect(existsSync(join(target_dir, 'config.json'))).toBe(true)
 	})
 
-	it('copies from dist/ candidate', () => {
+	test('copies from dist/ candidate', () => {
 		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'dist')
 		const result = copy_config_file({
 			targetDir: target_dir,
@@ -138,7 +138,7 @@ describe('copy_config_file', () => {
 		expect(existsSync(join(target_dir, 'config.json'))).toBe(true)
 	})
 
-	it('prefers root over src over dist candidate', () => {
+	test('prefers root over src over dist candidate', () => {
 		// Create all three: should pick root
 		const root_path = create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', '')
 		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', 'src')
@@ -161,7 +161,7 @@ describe('copy_config_file', () => {
 		expect(target_content).toBe(root_content)
 	})
 
-	it('returns null when source not found and no existing target', () => {
+	test('returns null when source not found and no existing target', () => {
 		const result = copy_config_file({
 			targetDir: target_dir,
 			fileEntry: {
@@ -176,7 +176,7 @@ describe('copy_config_file', () => {
 		expect(result).toBeNull()
 	})
 
-	it('returns written=true when source not found but target exists', () => {
+	test('returns written=true when source not found but target exists', () => {
 		// Create target file first
 		writeFileSync(join(target_dir, 'missing.json'), 'existing content', 'utf-8')
 
@@ -196,7 +196,7 @@ describe('copy_config_file', () => {
 		expect(result!.existing).toBe(true)
 	})
 
-	it('creates nested target directories', () => {
+	test('creates nested target directories', () => {
 		create_package_fixture(modules_root, '@bopstack/test-pkg', 'config.json', '')
 		const nested_target = join(target_dir, 'subdir', 'nested')
 
@@ -218,7 +218,7 @@ describe('copy_config_file', () => {
 })
 
 describe('compute_summary', () => {
-	it('counts written, skipped, existing', () => {
+	test('counts written, skipped, existing', () => {
 		const results: (CopyFileResult | null)[] = [
 			{ targetPath: '/a', existing: false, written: true },
 			{ targetPath: '/b', existing: false, written: true },
@@ -236,7 +236,7 @@ describe('compute_summary', () => {
 		expect(summary.existing[0].targetPath).toBe('/c')
 	})
 
-	it('handles empty results', () => {
+	test('handles empty results', () => {
 		const summary = compute_summary([], 0)
 		expect(summary.written).toHaveLength(0)
 		expect(summary.skipped).toBe(0)
@@ -244,7 +244,7 @@ describe('compute_summary', () => {
 		expect(summary.packageCount).toBe(0)
 	})
 
-	it('handles all null results', () => {
+	test('handles all null results', () => {
 		const summary = compute_summary([null, null, null], 5)
 		expect(summary.packageCount).toBe(5)
 		expect(summary.written).toHaveLength(0)
@@ -252,7 +252,7 @@ describe('compute_summary', () => {
 		expect(summary.existing).toHaveLength(0)
 	})
 
-	it('handles dry-run results (written=false, not existing)', () => {
+	test('handles dry-run results (written=false, not existing)', () => {
 		const results: (CopyFileResult | null)[] = [
 			{ targetPath: '/a', existing: false, written: false },
 			{ targetPath: '/b', existing: true, written: false }

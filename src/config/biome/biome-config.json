@@ -270,7 +270,13 @@
 				},
 				"useExplicitType": "error",
 				"useExplicitReturnType": "error",
-				"useConsistentTestIt": "error",
+				"useConsistentTestIt": {
+					"level": "error",
+					"options": {
+						"function": "test",
+						"withinDescribe": "test"
+					}
+				},
 				"useConsistentEnumValueType": "error",
 				"useDisposables": "error",
 				"useConsistentMethodSignatures": "error",
