@@ -10,8 +10,99 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"useExhaustiveDependencies": "error",
+				"noUndeclaredDependencies": "error",
+				"noNestedComponentDefinitions": "error"
+			},
 			"style": {
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"noNestedTernary": "error",
+				"noUselessElse": "error",
+				"noInferrableTypes": "error",
+				"useBlockStatements": "error",
+				"useCollapsedIf": "error",
+				"noMagicNumbers": "error",
+				"useConst": "error",
+				"useTemplate": "error",
+				"useNamingConvention": {
+					"level": "error",
+					"options": {
+						"strictCase": false,
+						"conventions": [
+							{
+								"selector": {
+									"kind": "objectLiteralProperty"
+								},
+								"match": ".*"
+							},
+							{
+								"selector": {
+									"kind": "typeProperty"
+								},
+								"match": ".*"
+							},
+							{
+								"selector": {
+									"kind": "const",
+									"scope": "global"
+								},
+								"formats": ["snake_case", "CONSTANT_CASE", "PascalCase"]
+							},
+							{
+								"selector": {
+									"kind": "importNamespace"
+								},
+								"formats": ["snake_case"]
+							}
+						]
+					}
+				}
+			},
+			"suspicious": {
+				"noConsole": "error",
+				"noExplicitAny": "error",
+				"noImportCycles": "error",
+				"noEmptyBlockStatements": "error"
+			},
+			"complexity": {
+				"noForEach": "error",
+				"noBannedTypes": "error",
+				"noImplicitCoercions": "error",
+				"noExcessiveCognitiveComplexity": {
+					"level": "error",
+					"options": {
+						"maxAllowedComplexity": 15
+					}
+				},
+				"noExcessiveLinesPerFunction": {
+					"level": "error",
+					"options": {
+						"maxLines": 80,
+						"skipBlankLines": true,
+						"skipIifes": true
+					}
+				},
+				"useMaxParams": {
+					"level": "error",
+					"options": {
+						"max": 3
+					}
+				}
+			},
+			"security": {
+				"noSecrets": "error"
+			},
+			"performance": {
+				"noAccumulatingSpread": "error",
+				"noBarrelFile": "error",
+				"noAwaitInLoops": "error"
+			},
+			"nursery": {
+				"noInlineStyles": "error",
+				"useSortedClasses": "error"
 			}
 		}
 	},
@@ -22,7 +113,15 @@
 			}
 		}
 	},
-	"plugins": ["./node_modules/@bopstack/config/src/config/biome/rules/no-console.grit"],
+	"plugins": [
+		"./node_modules/@bopstack/config/src/config/biome/rules/no_inline_if.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/no_hardcoded_colors.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/test_naming.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/prefer_testid.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/max_nesting_depth.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/drizzle_fk_index.grit",
+		"./node_modules/@bopstack/config/src/config/biome/rules/drizzle_no_relations.grit"
+	],
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded",

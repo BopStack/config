@@ -1,0 +1,7 @@
+`references(() => $col)` as $ref where {
+	register_diagnostic(
+		span = $ref,
+		message = "FK column may need an index. Add an index for query performance if this FK is frequently queried.",
+		severity = "info"
+	)
+}

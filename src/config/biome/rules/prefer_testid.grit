@@ -1,0 +1,9 @@
+`$obj.$method($args)` as $call where {
+	$obj <: not `page`,
+	$method <: r"(?:get|query|find)By(?:Text|Role|LabelText|PlaceholderText|DisplayValue|AltText|Title)",
+	register_diagnostic(
+		span = $call,
+		message = "Prefer `getByTestId` over DOM queries. Add `data-testid` attributes for resilient element selection.",
+		severity = "error"
+	)
+}

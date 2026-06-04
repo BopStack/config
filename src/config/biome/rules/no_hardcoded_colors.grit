@@ -1,0 +1,14 @@
+language css;
+
+`color: $value` as $decl where {
+	$value <: or {
+		r"#[0-9a-fA-F]+",
+		r"rgba?\(.*\)",
+		r"hsla?\(.*\)"
+	},
+	register_diagnostic(
+		span = $value,
+		message = "Don't use hardcoded colors. Use a CSS custom property (e.g. `var(--color-primary)`) instead.",
+		severity = "warn"
+	)
+}

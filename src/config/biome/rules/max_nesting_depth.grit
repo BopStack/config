@@ -1,0 +1,11 @@
+`if ($cond) { $body }` as $stmt where {
+	$body <: contains or {
+		`if ($_) { $_ }`,
+		`while ($_) { $_ }`,
+	},
+	register_diagnostic(
+		span = $stmt,
+		message = "Maximum nesting depth (1) exceeded. Each function should have at most one level of control flow (if/for/while).",
+		severity = "error",
+	)
+}

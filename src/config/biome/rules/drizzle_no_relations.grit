@@ -1,0 +1,7 @@
+`export const $table_name = sqliteTable($_)` as $table_def where {
+	register_diagnostic(
+		span = $table_def,
+		message = "Consider adding a relations() definition for this table to enable type-safe relational queries.",
+		severity = "info"
+	)
+}

@@ -1,0 +1,8 @@
+`test($name, $_)` as $call where {
+	$name <: not r".*given [^:]+: .+.*",
+	register_diagnostic(
+		span = $call,
+		message = "Test names must follow riteway convention: `test('given <condition>: should <behavior>')`.",
+		severity = "error"
+	)
+}

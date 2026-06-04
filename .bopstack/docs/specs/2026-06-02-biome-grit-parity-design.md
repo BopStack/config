@@ -189,16 +189,16 @@ This documentation is part of the design because users need to understand that t
 
 ## Implementation Checklist
 
-- [ ] Build the parity matrix from FFB Grit rules, FFB Biome config, OXC active exports, oxlint config, and oxfmt config.
-- [ ] Verify native Biome rule names and formatter options against the installed Biome schema/docs before editing config.
-- [ ] Update `src/config/biome/biome-config.json` with verified native Biome lint and formatter parity settings.
-- [ ] Remove `src/config/biome/rules/no-console.grit` and its plugin registration.
-- [ ] Copy or adapt only non-native FFB/OXC conventions into `src/config/biome/rules/*.grit`.
-- [ ] Add passing and failing fixtures/tests for every retained custom Grit rule.
-- [ ] Add verification that native no-console behavior replaces the deleted custom Grit rule.
-- [ ] Add exported-config smoke coverage proving custom Grit rules load through `@bopstack/config/biome`.
-- [ ] Update README with the final parity matrix, custom rules, removed duplicates, and known gaps.
-- [ ] Run the repo gate, including e2e, before implementation handoff.
+- [x] Build the parity matrix from FFB Grit rules, FFB Biome config, OXC active exports, oxlint config, and oxfmt config. — covered by PLAN-2 Task 1
+- [x] Verify native Biome rule names and formatter options against the installed Biome schema/docs before editing config. — covered by PLAN-2 Task 1 and Task 3
+- [x] Update `src/config/biome/biome-config.json` with verified native Biome lint and formatter parity settings. — covered by PLAN-2 Task 3
+- [x] Remove `src/config/biome/rules/no-console.grit` and its plugin registration. — covered by PLAN-2 Task 4
+- [x] Copy or adapt only non-native FFB/OXC conventions into `src/config/biome/rules/*.grit`. — covered by PLAN-2 Task 4
+- [x] Add passing and failing fixtures/tests for every retained custom Grit rule. — covered by PLAN-2 Task 2 and Task 4
+- [x] Add verification that native no-console behavior replaces the deleted custom Grit rule. — covered by PLAN-2 Task 2 and Task 3
+- [x] Add exported-config smoke coverage proving custom Grit rules load through `@bopstack/config/biome`. — covered by PLAN-2 Task 5
+- [x] Update README with the final parity matrix, custom rules, removed duplicates, and known gaps. — covered by PLAN-2 Task 6
+- [x] Run the repo gate, including e2e, before implementation handoff. — covered by PLAN-2 Task 7
 
 ## Open Questions
 
