@@ -6,13 +6,13 @@ build:
     pnpm exec tsc -p tsconfig.build.json
 
 check-biome:
-    pnpm exec biome check .
+    pnpm exec biome check src/ biome.json vitest.config.ts justfile
 
 format:
-    pnpm exec biome format --write .
+    pnpm exec biome format --write src/ biome.json vitest.config.ts justfile
 
 lint:
-    pnpm exec biome lint .
+    pnpm exec biome lint src/ biome.json vitest.config.ts justfile
 
 typecheck:
     pnpm exec tsc --noEmit
