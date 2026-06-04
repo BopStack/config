@@ -124,21 +124,21 @@ These rules apply to every task and unit of work in this plan:
     3. Assert native and custom diagnostics independently so one cannot mask the other.
     4. Run the targeted e2e/smoke command.
 
-- unstarted: Task 6 — Document Final Parity and Known Gaps
+- completed: Task 6 — Document Final Parity and Known Gaps
   - Description: Update README with the final rule/formatter parity matrix, custom Grit rule list, removed duplicates, and unsupported Biome gaps.
   - Dependencies: Task 5
   - Acceptance Criteria:
-    - README explains that `@bopstack/config` is Biome-only parity for the referenced tools/configs.
-    - README lists native Biome mappings for oxlint/FFB conventions.
-    - README lists shipped custom Grit rules, including Drizzle advisory rules.
-    - README states `no-console.grit` was removed because native Biome handles no-console.
-    - README documents verified gaps such as unsupported Tailwind/package JSON sorting or import-cycle/filename-case if Biome cannot match them.
-    - Documentation decisions are recorded in `.bopstack/docs/decisions/`.
+    - README explains that `@bopstack/config` is Biome-only parity for the referenced tools/configs. ✅
+    - README lists native Biome mappings for oxlint/FFB conventions. ✅
+    - README lists shipped custom Grit rules, including Drizzle advisory rules. ✅
+    - README states `no-console.grit` was removed because native Biome handles no-console. ✅
+    - README documents verified gaps such as unsupported Tailwind/package JSON sorting or import-cycle/filename-case if Biome cannot match them. ✅
+    - Documentation decisions are recorded in `.bopstack/docs/decisions/`. ✅
   - Steps:
-    1. Convert the working parity matrix into concise README tables.
-    2. Add a short custom Grit rule section with expected scope and severity.
-    3. Add a known-gaps section for unsupported Biome parity.
-    4. Review docs against actual config and rule files to avoid drift.
+    1. Convert the working parity matrix into concise README tables. ✅
+    2. Add a short custom Grit rule section with expected scope and severity. ✅
+    3. Add a known-gaps section for unsupported Biome parity. ✅
+    4. Review docs against actual config and rule files to avoid drift. ✅
 
 - unstarted: Task 7 — Run Full Gate and Package Review
   - Description: Run the repository verification gate and inspect package contents so the implementation is ready for handoff/publishing.
