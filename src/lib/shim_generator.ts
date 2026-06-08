@@ -11,24 +11,21 @@ import { dirname, join } from 'node:path'
 
 import type { ConfigFile } from './package_selection.js'
 
-/** Shim content for biome.json. */
-const BIOME_SHIM = JSON.stringify(
-	{
-		$schema: 'https://biomejs.dev/schemas/latest/schema.json',
-		extends: ['@bopstack/config/biome']
-	},
-	null,
-	'\t'
-)
+/** @note manual string to avoid JSON.stringify expanding the array across lines */
+const BIOME_SHIM =
+	'{\n' +
+	'\t"$schema": "https://biomejs.dev/schemas/latest/schema.json",\n' +
+	'\t"extends": ["@bopstack/config/biome"]\n' +
+	'}\n'
 
 /** Shim content for tsconfig.json. */
-const TSCONFIG_SHIM = JSON.stringify(
+const TSCONFIG_SHIM = `${JSON.stringify(
 	{
 		extends: '@bopstack/config/tsconfig/base'
 	},
 	null,
 	'\t'
-)
+)}\n`
 
 /** Map of source file name to shim content generator. */
 const SHIM_CONTENTS: Record<string, string> = {
@@ -37,7 +34,7 @@ const SHIM_CONTENTS: Record<string, string> = {
 }
 
 /** Options for generating a config shim. */
-export interface GenerateShimOptions {
+export type GenerateShimOptions = {
 	/** Target consumer project root directory. */
 	targetDir: string
 	/** Config file entry describing what shim to generate. */
@@ -47,7 +44,7 @@ export interface GenerateShimOptions {
 }
 
 /** Result from generating a config shim. */
-export interface GenerateShimResult {
+export type GenerateShimResult = {
 	/** Target file path that was (or would be) written. */
 	targetPath: string
 	/** Whether the file already exists. */

@@ -9,7 +9,7 @@ import { copyFileSync, existsSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 
 /** Options for copying a single config file. */
-export interface CopyFileOptions {
+export type CopyFileOptions = {
 	/** Target project root directory. */
 	targetDir: string
 	/** Source config file entry describing what to copy. */
@@ -28,7 +28,7 @@ export interface CopyFileOptions {
 }
 
 /** Result from copying a file. */
-export interface CopyFileResult {
+export type CopyFileResult = {
 	/** Target file path that was (or would be) written. */
 	targetPath: string
 	/** Whether the file already exists. */
@@ -38,7 +38,7 @@ export interface CopyFileResult {
 }
 
 /** Structured summary data (pure, no console.log). */
-export interface CopySummary {
+export type CopySummary = {
 	/** Results of files that were actually written. */
 	written: CopyFileResult[]
 	/** Results of files that were skipped (source not found). */

@@ -9,7 +9,7 @@ import { check_justfile_syntax } from './check_justfile_syntax.js'
 import { check_no_coauthor } from './check_no_coauthor.js'
 
 /** A named lint check that can be run via `bopstack-config lint <name>`. */
-export interface LintCheck {
+export type LintCheck = {
 	/** Short one-liner describing what this check does. */
 	description: string
 	/** Usage string shown when args are missing. */

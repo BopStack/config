@@ -79,7 +79,12 @@
 				"useTemplate": "error",
 				"noCommonJs": "error",
 				"useNodejsImportProtocol": "error",
-				"useConsistentTypeDefinitions": "error",
+				"useConsistentTypeDefinitions": {
+					"options": {
+						"style": "type"
+					},
+					"level": "error"
+				},
 				"useExplicitLengthCheck": "error",
 				"useShorthandAssign": "error",
 				"useDefaultSwitchClause": "error",
@@ -296,6 +301,11 @@
 			"semicolons": "asNeeded",
 			"trailingCommas": "none",
 			"quoteStyle": "single"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	}
 }

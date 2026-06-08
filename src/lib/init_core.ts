@@ -11,7 +11,7 @@ import type { GenerateShimResult } from './shim_generator.js'
 import { generate_config } from './shim_generator.js'
 
 /** Dependencies injected into the init orchestrator. */
-export interface InitDeps {
+export type InitDeps = {
 	exists: (path: string) => boolean
 	install: (packages: string[], target: string) => { status: number | null; stderr: string }
 	log: (message: string) => void
@@ -19,7 +19,7 @@ export interface InitDeps {
 }
 
 /** Structured result from a successful init run. */
-export interface InitResult {
+export type InitResult = {
 	packageCount: number
 	copyResults: (GenerateShimResult | null)[]
 }

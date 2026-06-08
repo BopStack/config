@@ -8,7 +8,7 @@
 import { lint_checks, list_checks } from '../lint/index.js'
 
 /** Result from running a lint check. */
-export interface LintResult {
+export type LintResult = {
 	/** Exit code: 0 for pass, 1 for fail/error. */
 	code: number
 	/** Printable message(s) for the user. */

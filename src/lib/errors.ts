@@ -6,7 +6,7 @@
  */
 
 /** Parsed init command arguments. */
-export interface InitArgs {
+export type InitArgs = {
 	target: string
 	kind: string
 	dryRun: boolean

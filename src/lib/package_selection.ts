@@ -10,7 +10,7 @@ import { type } from 'arktype'
 /**
  * A config file entry describing a generated shim file.
  */
-export interface ConfigFile {
+export type ConfigFile = {
 	/** Package name providing the shared config. */
 	packageName: string
 	/** File name to generate inside the package (e.g. 'biome.json'). */
