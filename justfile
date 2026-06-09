@@ -15,10 +15,11 @@ lint:
     pnpm exec biome lint src/ biome.json vitest.config.ts
 
 # Regenerate CHANGELOG.md from git tags and commit history.
+# Uses git-cliff (https://git-cliff.org).
 changelog:
-    bun scripts/changelog.ts
+    pnpm exec git-cliff -o CHANGELOG.md
 
-# Create a new release: bumps package.json, tags, re-generates changelog, commits.
+# Bump version, tag, update changelog, and release.
 # Usage: just release 0.2.0
 release version:
     @echo "=== Releasing {{ version }} ==="
@@ -32,7 +33,7 @@ release version:
     # Create the tag
     git tag -a v{{ version }} -m "v{{ version }}"
     # Regenerate changelog (new tag is detected, populates that version's section)
-    bun scripts/changelog.ts
+    pnpm exec git-cliff -o CHANGELOG.md
     # Commit the changelog and move the tag to include it
     git add CHANGELOG.md
     git commit --amend --no-edit 2>&1 | tail -1
