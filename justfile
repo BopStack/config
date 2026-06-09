@@ -38,7 +38,7 @@ release version:
     git add CHANGELOG.md
     git commit --amend --no-edit 2>&1 | tail -1
     git tag -f v{{ version }} > /dev/null 2>&1
-    @echo "=== v{{ version }} released (tag moved to include CHANGELOG.md) ===
+    @echo "=== v{{ version }} released (tag moved to include CHANGELOG.md) ==="
 
 typecheck:
     pnpm exec tsc --noEmit
