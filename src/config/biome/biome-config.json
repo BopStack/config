@@ -16,6 +16,7 @@
 			"recommended": true,
 			"correctness": {
 				"useImportExtensions": "off",
+				"noUnresolvedImports": "off",
 				"noUnusedVariables": "error",
 				"noUnusedImports": "error",
 				"noUnusedFunctionParameters": "error",
