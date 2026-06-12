@@ -42,16 +42,16 @@ function report_error(error: InitError): void {
  */
 function install_packages(
 	packages: string[],
-	target: string
+	target: string,
 ): { status: number | null; stderr: string } {
 	const result = spawnSync('pnpm', ['add', '-D', ...packages], {
 		cwd: target,
-		stdio: ['ignore', 'pipe', 'pipe']
+		stdio: ['ignore', 'pipe', 'pipe'],
 	})
 
 	return {
 		status: result.status,
-		stderr: result.stderr?.toString() ?? ''
+		stderr: result.stderr?.toString() ?? '',
 	}
 }
 
@@ -71,7 +71,7 @@ export async function init(raw_args: string[]): Promise<void> {
 		exists: existsSync,
 		install: install_packages,
 		log: console.log,
-		warn: console.warn
+		warn: console.warn,
 	})
 
 	if (!result.ok) {

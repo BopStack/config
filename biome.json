@@ -16,6 +16,7 @@
 			"recommended": true,
 			"correctness": {
 				"useImportExtensions": "off",
+				"noUnresolvedImports": "off",
 				"noUnusedVariables": "error",
 				"noUnusedImports": "error",
 				"noUnusedFunctionParameters": "error",
@@ -27,8 +28,7 @@
 				"noGlobalDirnameFilename": "error",
 				"useHookAtTopLevel": "error",
 				"useParseIntRadix": "error",
-				"noPrivateImports": "error",
-				"noUnresolvedImports": "off"
+				"noPrivateImports": "error"
 			},
 			"style": {
 				"noNonNullAssertion": "off",
@@ -207,7 +207,7 @@
 						"skipBlankLines": true
 					}
 				},
-				"useExplicitType": "error",
+				"useExplicitType": "off",
 				"useExplicitReturnType": "error",
 				"useConsistentTestIt": {
 					"level": "error",
@@ -263,7 +263,7 @@
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded",
-			"trailingCommas": "none",
+			"trailingCommas": "all",
 			"quoteStyle": "single"
 		}
 	},

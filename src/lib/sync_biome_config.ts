@@ -30,46 +30,46 @@ const TEST_FILE_OVERRIDES: JsonObject[] = [
 			rules: {
 				style: {
 					noMagicNumbers: 'off',
-					noNestedTernary: 'off'
+					noNestedTernary: 'off',
 				},
 				nursery: {
 					noConditionalExpect: 'off',
 					useDestructuring: 'off',
 					useExplicitType: 'off',
-					useExplicitReturnType: 'off'
+					useExplicitReturnType: 'off',
 				},
 				correctness: {
-					noUnresolvedImports: 'off'
+					noUnresolvedImports: 'off',
 				},
 				suspicious: {
-					noEmptyBlockStatements: 'off'
+					noEmptyBlockStatements: 'off',
 				},
 				security: {
-					noSecrets: 'off'
+					noSecrets: 'off',
 				},
 				performance: {
-					useTopLevelRegex: 'off'
+					useTopLevelRegex: 'off',
 				},
 				complexity: {
 					useMaxParams: 'off',
 					noExcessiveLinesPerFunction: 'off',
-					useSimplifiedLogicExpression: 'off'
-				}
-			}
-		}
-	}
+					useSimplifiedLogicExpression: 'off',
+				},
+			},
+		},
+	},
 ]
 
 const ROOT_CORRECTNESS_RULES: JsonObject = {
-	noUnresolvedImports: 'off'
+	noUnresolvedImports: 'off',
 }
 
 const ROOT_STYLE_RULES: JsonObject = {
-	useNamingConvention: 'off'
+	useNamingConvention: 'off',
 }
 
 const ROOT_SUSPICIOUS_RULES: JsonObject = {
-	noConsole: 'off'
+	noConsole: 'off',
 }
 
 /**
@@ -129,17 +129,17 @@ function root_linter_config(shared_config: JsonObject): JsonObject {
 			...shared_rules,
 			correctness: {
 				...(is_json_object(shared_rules.correctness) ? shared_rules.correctness : {}),
-				...ROOT_CORRECTNESS_RULES
+				...ROOT_CORRECTNESS_RULES,
 			},
 			style: {
 				...(is_json_object(shared_rules.style) ? shared_rules.style : {}),
-				...ROOT_STYLE_RULES
+				...ROOT_STYLE_RULES,
 			},
 			suspicious: {
 				...(is_json_object(shared_rules.suspicious) ? shared_rules.suspicious : {}),
-				...ROOT_SUSPICIOUS_RULES
-			}
-		}
+				...ROOT_SUSPICIOUS_RULES,
+			},
+		},
 	}
 }
 
@@ -152,7 +152,7 @@ export function create_root_biome_config(shared_config: JsonObject): JsonObject 
 		linter: root_linter_config(shared_config),
 		root: true,
 		overrides: TEST_FILE_OVERRIDES,
-		plugins: local_plugin_paths(shared_config.plugins)
+		plugins: local_plugin_paths(shared_config.plugins),
 	}
 }
 

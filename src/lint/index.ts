@@ -23,13 +23,13 @@ export const lint_checks: Record<string, LintCheck> = {
 	'check-justfile-syntax': {
 		description: 'Validate a justfile using `just --summary`',
 		usage: 'bopstack-config lint check-justfile-syntax <path-to-justfile>',
-		run: (filePath: string) => check_justfile_syntax(filePath)
+		run: (filePath: string) => check_justfile_syntax(filePath),
 	},
 	'check-no-coauthor': {
 		description: 'Reject commit messages containing Co-authored-by: trailers',
 		usage: 'bopstack-config lint check-no-coauthor <path-to-commit-message>',
-		run: (filePath: string) => check_no_coauthor(filePath)
-	}
+		run: (filePath: string) => check_no_coauthor(filePath),
+	},
 }
 
 /**

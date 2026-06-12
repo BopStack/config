@@ -55,12 +55,12 @@ export type CopySummary = {
 function resolve_package_config_path(
 	root: string,
 	packageName: string,
-	fileName: string
+	fileName: string,
 ): string | null {
 	const candidates = [
 		join(root, 'node_modules', packageName, fileName),
 		join(root, 'node_modules', packageName, 'src', fileName),
-		join(root, 'node_modules', packageName, 'dist', fileName)
+		join(root, 'node_modules', packageName, 'dist', fileName),
 	]
 
 	for (const candidate of candidates) {
@@ -85,7 +85,7 @@ export function copy_config_file(options: CopyFileOptions): CopyFileResult | nul
 	if (dryRun) {
 		console.log(
 			`[dry-run] ${existing ? 'overwrite' : 'create'} ${targetPath}` +
-				(targetFileName !== sourceFileName ? ` (from ${sourceFileName})` : '')
+				(targetFileName !== sourceFileName ? ` (from ${sourceFileName})` : ''),
 		)
 		return { targetPath, existing, written: false }
 	}
@@ -93,7 +93,7 @@ export function copy_config_file(options: CopyFileOptions): CopyFileResult | nul
 	const sourcePath = resolve_package_config_path(
 		nodeModulesRoot,
 		fileEntry.packageName,
-		sourceFileName
+		sourceFileName,
 	)
 
 	if (!(sourcePath || existing)) {
@@ -122,7 +122,7 @@ export function copy_config_file(options: CopyFileOptions): CopyFileResult | nul
  */
 export function compute_summary(
 	results: (CopyFileResult | null)[],
-	packageCount: number
+	packageCount: number,
 ): CopySummary {
 	const copyResults = results.filter((r): r is CopyFileResult => r !== null)
 	const written = copyResults.filter((r) => r.written)
@@ -137,7 +137,7 @@ export function compute_summary(
  */
 export function report_summary(
 	results: (CopyFileResult | null)[],
-	packagesInstalled: string[]
+	packagesInstalled: string[],
 ): void {
 	const summary = compute_summary(results, packagesInstalled.length)
 

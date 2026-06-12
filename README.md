@@ -69,7 +69,7 @@ pnpm exec bopstack-config init --kind=default --dry-run
 | `useTabs: true`     | `formatter.indentStyle: "tab"`          | native |
 | `singleQuote: true` | `javascript.formatter.quoteStyle: "single"` | native |
 | `semi: false`       | `javascript.formatter.semicolons: "asNeeded"` | native |
-| `trailingComma: none` | `javascript.formatter.trailingCommas: "none"` | native |
+| `trailingComma: all` | `javascript.formatter.trailingCommas: "all"` | native |
 | `printWidth: 100`   | `formatter.lineWidth: 100`              | native |
 | `sortImports: true` | `assist.actions.source.organizeImports: "on"` | native |
 | `sortTailwindcss: true` | `nursery.useSortedClasses: "error"`  | native |
@@ -146,6 +146,7 @@ These source conventions are not enforced by the shared config because Biome lac
 | Package JSON sorting | oxfmt | No Biome equivalent. |
 | No final newline insertion | oxfmt | Biome always inserts a final newline. |
 | snake_case filenames | oxlint `filename-case` | Intentionally omitted — `useFilenamingConvention` is too invasive for a shared config; consumers should configure per-project. |
+| Required explicit type annotations | Biome nursery | Disabled — `useExplicitType` is too noisy for a shared consumer config. |
 
 ## Development
 

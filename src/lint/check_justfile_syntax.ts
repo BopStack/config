@@ -15,7 +15,7 @@ import { spawnSync } from 'node:child_process'
  */
 export function check_justfile_syntax(filePath: string): boolean {
 	const result = spawnSync('just', ['--summary', '-f', filePath], {
-		stdio: ['ignore', 'pipe', 'pipe']
+		stdio: ['ignore', 'pipe', 'pipe'],
 	})
 
 	if (result.status === 0) {

@@ -83,7 +83,7 @@ describe('parse_init_args', () => {
 
 	test('given --target, --kind, and --dry-run: should combine all options', () => {
 		const result = parse_init_args(['--target=/x', '--kind=default', '--dry-run'], {
-			cwd: '/tmp/project'
+			cwd: '/tmp/project',
 		})
 		expect(result.ok).toBe(true)
 		if (!result.ok) {

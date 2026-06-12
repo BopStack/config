@@ -28,7 +28,7 @@ export async function lint(raw_args: string[]): Promise<LintResult> {
 	if (!name) {
 		return {
 			code: 0,
-			messages: ['Available lint checks:', list_checks()]
+			messages: ['Available lint checks:', list_checks()],
 		}
 	}
 
@@ -37,7 +37,7 @@ export async function lint(raw_args: string[]): Promise<LintResult> {
 	if (!check) {
 		return {
 			code: 1,
-			messages: [`Unknown lint check: '${name}'. Available:`, list_checks()]
+			messages: [`Unknown lint check: '${name}'. Available:`, list_checks()],
 		}
 	}
 
@@ -45,7 +45,7 @@ export async function lint(raw_args: string[]): Promise<LintResult> {
 	if (args.length === 0) {
 		return {
 			code: 1,
-			messages: [`Usage: ${check.usage}`]
+			messages: [`Usage: ${check.usage}`],
 		}
 	}
 
@@ -60,7 +60,7 @@ export async function lint(raw_args: string[]): Promise<LintResult> {
 		const message = err instanceof Error ? err.message : String(err)
 		return {
 			code: 1,
-			messages: [`Lint check '${name}' failed: ${message}`]
+			messages: [`Lint check '${name}' failed: ${message}`],
 		}
 	}
 }

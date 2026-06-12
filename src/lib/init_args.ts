@@ -19,7 +19,7 @@ import { ProjectKindSchema } from './package_selection.js'
  */
 export function parse_init_args(
 	rawArgs: string[],
-	options: { cwd: string }
+	options: { cwd: string },
 ): Result<InitArgs, InitError> {
 	let target: string | undefined
 	let kind: string | undefined
@@ -49,7 +49,7 @@ export function parse_init_args(
 		value: {
 			target: target ?? options.cwd,
 			kind: kindStr,
-			dryRun
-		}
+			dryRun,
+		},
 	}
 }

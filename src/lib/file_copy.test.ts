@@ -21,7 +21,7 @@ function create_package_fixture(
 	package_name: string,
 	source_file_name: string,
 	sub_dir = '',
-	content = 'test content'
+	content = 'test content',
 ): string {
 	const pkg_dir = join(root, 'node_modules', package_name, sub_dir)
 	mkdirSync(pkg_dir, { recursive: true })
@@ -50,10 +50,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/git-hook',
 				sourceFileName: 'lefthook.yml',
-				targetFileName: '.lefthook.yml'
+				targetFileName: '.lefthook.yml',
 			},
 			dryRun: true,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -72,10 +72,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/git-hook',
 				sourceFileName: 'lefthook.yml',
-				targetFileName: '.lefthook.yml'
+				targetFileName: '.lefthook.yml',
 			},
 			dryRun: true,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -90,10 +90,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/tsconfig',
 				sourceFileName: 'tsconfig.base.json',
-				targetFileName: 'tsconfig.base.json'
+				targetFileName: 'tsconfig.base.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -109,10 +109,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
-				targetFileName: 'config.json'
+				targetFileName: 'config.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -127,10 +127,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
-				targetFileName: 'config.json'
+				targetFileName: 'config.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -149,10 +149,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
-				targetFileName: 'config.json'
+				targetFileName: 'config.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		// Verify content came from root path
@@ -167,10 +167,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/nonexistent',
 				sourceFileName: 'missing.json',
-				targetFileName: 'missing.json'
+				targetFileName: 'missing.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).toBeNull()
@@ -185,10 +185,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/nonexistent',
 				sourceFileName: 'missing.json',
-				targetFileName: 'missing.json'
+				targetFileName: 'missing.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -205,10 +205,10 @@ describe('copy_config_file', () => {
 			fileEntry: {
 				packageName: '@bopstack/test-pkg',
 				sourceFileName: 'config.json',
-				targetFileName: 'config.json'
+				targetFileName: 'config.json',
 			},
 			dryRun: false,
-			nodeModulesRoot: modules_root
+			nodeModulesRoot: modules_root,
 		})
 
 		expect(result).not.toBeNull()
@@ -224,7 +224,7 @@ describe('compute_summary', () => {
 			{ targetPath: '/b', existing: false, written: true },
 			null,
 			null,
-			{ targetPath: '/c', existing: true, written: false }
+			{ targetPath: '/c', existing: true, written: false },
 		]
 
 		const summary = compute_summary(results, 3)
@@ -255,7 +255,7 @@ describe('compute_summary', () => {
 	test('given dry-run results: should handle written=false and not existing', () => {
 		const results: (CopyFileResult | null)[] = [
 			{ targetPath: '/a', existing: false, written: false },
-			{ targetPath: '/b', existing: true, written: false }
+			{ targetPath: '/b', existing: true, written: false },
 		]
 
 		const summary = compute_summary(results, 1)

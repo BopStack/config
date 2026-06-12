@@ -55,8 +55,8 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 				error: {
 					kind: 'install_failed',
 					stderr: installResult.stderr,
-					status: installResult.status
-				}
+					status: installResult.status,
+				},
 			}
 		}
 		deps.log('Packages installed successfully.\n')
@@ -70,7 +70,7 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 		const result = generate_config({
 			targetDir: target,
 			fileEntry: entry,
-			dryRun
+			dryRun,
 		})
 
 		let label: string
@@ -96,7 +96,7 @@ export function run_init_core(args: InitArgs, deps: InitDeps): Result<InitResult
 		ok: true,
 		value: {
 			packageCount: packages.length,
-			copyResults
-		}
+			copyResults,
+		},
 	}
 }

@@ -33,13 +33,13 @@ const DEFAULT_CONFIG_FILES: ConfigFile[] = [
 	{
 		packageName: '@bopstack/config',
 		sourceFileName: 'biome.json',
-		targetFileName: 'biome.json'
+		targetFileName: 'biome.json',
 	},
 	{
 		packageName: '@bopstack/config',
 		sourceFileName: 'tsconfig.json',
-		targetFileName: 'tsconfig.json'
-	}
+		targetFileName: 'tsconfig.json',
+	},
 ]
 
 /**

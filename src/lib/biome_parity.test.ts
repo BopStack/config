@@ -62,11 +62,11 @@ describe('biome formatter parity with oxfmt', () => {
 		expect((js_formatter as Record<string, unknown>).semicolons).toBe('asNeeded')
 	})
 
-	test('given oxfmt trailingComma none: should use trailingCommas none', () => {
+	test('given oxfmt trailingComma all: should use trailingCommas all', () => {
 		const js_config = biome_config.javascript as Record<string, unknown> | undefined
 		const js_formatter = js_config?.formatter as Record<string, unknown> | undefined
 		expect(js_formatter).toBeDefined()
-		expect((js_formatter as Record<string, unknown>).trailingCommas).toBe('none')
+		expect((js_formatter as Record<string, unknown>).trailingCommas).toBe('all')
 	})
 
 	test('given oxfmt printWidth 100: should use lineWidth 100', () => {
@@ -284,6 +284,12 @@ describe('biome formatter parity with additional checks', () => {
 		expect(nursery).toBeDefined()
 		expect((nursery as Record<string, unknown>).useSortedClasses).toBeDefined()
 	})
+
+	test('given shared consumer config: should not require explicit types', () => {
+		const nursery = lint_rules('nursery')
+		expect(nursery).toBeDefined()
+		expect((nursery as Record<string, unknown>).useExplicitType).toBe('off')
+	})
 })
 
 // ── Plugin registration ────────────────────────────────────────────────────
@@ -296,7 +302,7 @@ describe('biome Grit plugin registration', () => {
 		'prefer_testid',
 		'max_nesting_depth',
 		'drizzle_fk_index',
-		'drizzle_no_relations'
+		'drizzle_no_relations',
 	]
 
 	for (const rule of expected_rules) {
@@ -331,7 +337,7 @@ function run_lint_on_fixture(fixture_code: string, fixture_name: string): string
 		const rules_dir = join(PACKAGE_DIR, 'src', 'config', 'biome', 'rules')
 		config = config.replaceAll(
 			'./node_modules/@bopstack/config/src/config/biome/rules/',
-			`${rules_dir}/`
+			`${rules_dir}/`,
 		)
 		writeFileSync(join(tmp_dir, 'biome.json'), config)
 
@@ -346,8 +352,8 @@ function run_lint_on_fixture(fixture_code: string, fixture_name: string): string
 				{
 					cwd: tmp_dir,
 					encoding: 'utf-8',
-					timeout: 15_000
-				}
+					timeout: 15_000,
+				},
 			)
 		} catch (e) {
 			// biome exits with code 1 when diagnostics are emitted;

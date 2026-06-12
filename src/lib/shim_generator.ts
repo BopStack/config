@@ -21,16 +21,16 @@ const BIOME_SHIM =
 /** Shim content for tsconfig.json. */
 const TSCONFIG_SHIM = `${JSON.stringify(
 	{
-		extends: '@bopstack/config/tsconfig/base'
+		extends: '@bopstack/config/tsconfig/base',
 	},
 	null,
-	'\t'
+	'\t',
 )}\n`
 
 /** Map of source file name to shim content generator. */
 const SHIM_CONTENTS: Record<string, string> = {
 	'biome.json': BIOME_SHIM,
-	'tsconfig.json': TSCONFIG_SHIM
+	'tsconfig.json': TSCONFIG_SHIM,
 }
 
 /** Options for generating a config shim. */

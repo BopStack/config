@@ -275,7 +275,7 @@
 						"skipBlankLines": true
 					}
 				},
-				"useExplicitType": "error",
+				"useExplicitType": "off",
 				"useExplicitReturnType": "error",
 				"useConsistentTestIt": {
 					"level": "error",
@@ -331,7 +331,7 @@
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded",
-			"trailingCommas": "none",
+			"trailingCommas": "all",
 			"quoteStyle": "single"
 		}
 	},

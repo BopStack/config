@@ -18,7 +18,7 @@ const OLD_PACKAGES = [
 	'@bopstack/spellcheck',
 	'@bopstack/just',
 	'@bopstack/custom-lint',
-	'@bopstack/git-hook'
+	'@bopstack/git-hook',
 ]
 
 describe('package_selection', () => {
@@ -37,12 +37,12 @@ describe('package_selection', () => {
 	test('given default kind: should return biome.json and tsconfig.json shim entries', () => {
 		const files = get_config_files('default')
 		expect(
-			files.some((f) => f.targetFileName === 'biome.json' && f.sourceFileName === 'biome.json')
+			files.some((f) => f.targetFileName === 'biome.json' && f.sourceFileName === 'biome.json'),
 		).toBe(true)
 		expect(
 			files.some(
-				(f) => f.targetFileName === 'tsconfig.json' && f.sourceFileName === 'tsconfig.json'
-			)
+				(f) => f.targetFileName === 'tsconfig.json' && f.sourceFileName === 'tsconfig.json',
+			),
 		).toBe(true)
 	})
 
@@ -58,7 +58,7 @@ describe('package_selection', () => {
 			'@bopstack/spellcheck',
 			'@bopstack/just',
 			'@bopstack/custom-lint',
-			'@bopstack/git-hook'
+			'@bopstack/git-hook',
 		]
 		for (const pkg of old_packages) {
 			expect(files.some((f) => f.packageName === pkg)).toBe(false)

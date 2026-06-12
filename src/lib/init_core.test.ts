@@ -13,7 +13,7 @@ function create_mock_deps(overrides: Partial<InitDeps> = {}): InitDeps {
 		install: () => ({ status: 0, stderr: '' }),
 		log: noop,
 		warn: noop,
-		...overrides
+		...overrides,
 	}
 }
 
@@ -30,7 +30,7 @@ describe('run_init_core', () => {
 
 	test('given a failing install: should return install_failed error', () => {
 		const deps = create_mock_deps({
-			install: () => ({ status: 42, stderr: 'mock failure' })
+			install: () => ({ status: 42, stderr: 'mock failure' }),
 		})
 
 		const result = run_init_core({ target: '/tmp/project', kind: 'default', dryRun: false }, deps)
@@ -40,7 +40,7 @@ describe('run_init_core', () => {
 			expect(result.error).toMatchObject({
 				kind: 'install_failed',
 				stderr: 'mock failure',
-				status: 42
+				status: 42,
 			})
 		}
 	})
@@ -48,7 +48,7 @@ describe('run_init_core', () => {
 	test('given a successful dry-run: should return ok with packageCount', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: true },
-			create_mock_deps()
+			create_mock_deps(),
 		)
 
 		expect(result.ok).toBe(true)
@@ -60,7 +60,7 @@ describe('run_init_core', () => {
 	test('given a successful install: should return ok with packageCount', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: false },
-			create_mock_deps()
+			create_mock_deps(),
 		)
 
 		expect(result.ok).toBe(true)
@@ -79,7 +79,7 @@ describe('run_init_core', () => {
 			},
 			warn: (msg: string) => {
 				warns.push(msg)
-			}
+			},
 		})
 
 		run_init_core({ target: '/tmp/project', kind: 'default', dryRun: true }, deps)
