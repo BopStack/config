@@ -22,19 +22,19 @@ const OLD_PACKAGES = [
 ]
 
 describe('package_selection', () => {
-	test('get_packages returns the new single-package set for default kind', () => {
+	test('given default kind: should return the expected package set', () => {
 		const packages = get_packages('default')
 		expect([...packages].sort()).toEqual([...EXPECTED_PACKAGES].sort())
 	})
 
-	test('get_packages does not include old default packages', () => {
+	test('given default kind: should not include old default packages', () => {
 		const packages = get_packages('default')
 		for (const old of OLD_PACKAGES) {
 			expect(packages.includes(old)).toBe(false)
 		}
 	})
 
-	test('get_config_files returns biome.json and tsconfig.json shim entries for default kind', () => {
+	test('given default kind: should return biome.json and tsconfig.json shim entries', () => {
 		const files = get_config_files('default')
 		expect(
 			files.some((f) => f.targetFileName === 'biome.json' && f.sourceFileName === 'biome.json')
@@ -46,7 +46,7 @@ describe('package_selection', () => {
 		).toBe(true)
 	})
 
-	test('get_config_files does not contain old out-of-scope entries', () => {
+	test('given default kind: should not contain old out-of-scope entries', () => {
 		const files = get_config_files('default')
 		const old_packages = [
 			'@bopstack/tsconfig',
@@ -65,7 +65,7 @@ describe('package_selection', () => {
 		}
 	})
 
-	test('ProjectKindSchema accepts "default"', () => {
+	test('given "default" value: should be accepted by ProjectKindSchema', () => {
 		expect(ProjectKindSchema('default')).toEqual('default')
 	})
 })

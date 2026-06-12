@@ -14,6 +14,11 @@ format:
 lint:
     pnpm exec biome lint src/ biome.json vitest.config.ts
 
+# Copy the shared Biome config to the repo root with local plugin paths.
+sync-biome:
+    pnpm exec tsx -e "import { sync_root_biome_config } from './src/lib/sync_biome_config.ts'; sync_root_biome_config()"
+    pnpm exec biome format --write biome.json
+
 # Regenerate CHANGELOG.md from git tags and commit history.
 # Uses git-cliff (https://git-cliff.org).
 changelog:

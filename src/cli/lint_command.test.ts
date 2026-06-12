@@ -4,7 +4,7 @@
  * Tests the lint function directly (returns LintResult, no process.exit).
  */
 
-import { describe, test, expect } from 'vitest'
+import { describe, expect, test } from 'vitest'
 import { lint } from './lint_command.js'
 
 describe('lint command', () => {

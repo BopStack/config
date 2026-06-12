@@ -1,42 +1,5 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
-	"root": true,
-	"overrides": [
-		{
-			"includes": ["**/*.test.ts", "**/*.spec.ts"],
-			"linter": {
-				"rules": {
-					"style": {
-						"noMagicNumbers": "off",
-						"noNestedTernary": "off"
-					},
-					"nursery": {
-						"noConditionalExpect": "off",
-						"useDestructuring": "off",
-						"useExplicitType": "off",
-						"useExplicitReturnType": "off"
-					},
-					"correctness": {
-						"noUnresolvedImports": "off"
-					},
-					"suspicious": {
-						"noEmptyBlockStatements": "off"
-					},
-					"security": {
-						"noSecrets": "off"
-					},
-					"performance": {
-						"useTopLevelRegex": "off"
-					},
-					"complexity": {
-						"useMaxParams": "off",
-						"noExcessiveLinesPerFunction": "off",
-						"useSimplifiedLogicExpression": "off"
-					}
-				}
-			}
-		}
-	],
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
@@ -53,7 +16,6 @@
 			"recommended": true,
 			"correctness": {
 				"useImportExtensions": "off",
-				"noUnresolvedImports": "off",
 				"noUnusedVariables": "error",
 				"noUnusedImports": "error",
 				"noUnusedFunctionParameters": "error",
@@ -65,7 +27,8 @@
 				"noGlobalDirnameFilename": "error",
 				"useHookAtTopLevel": "error",
 				"useParseIntRadix": "error",
-				"noPrivateImports": "error"
+				"noPrivateImports": "error",
+				"noUnresolvedImports": "off"
 			},
 			"style": {
 				"noNonNullAssertion": "off",
@@ -266,6 +229,7 @@
 				"noUnnecessaryConditions": "error",
 				"noUnsafePlusOperands": "error",
 				"noBaseToString": "error",
+				"noDuplicateEnumValues": "error",
 				"noForIn": "error",
 				"noIncrementDecrement": "error",
 				"noJsxPropsBind": "error",
@@ -275,6 +239,13 @@
 				"noScriptUrl": "error",
 				"useDestructuring": "error",
 				"useImportsFirst": "error"
+			}
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
 			}
 		}
 	},
@@ -289,13 +260,6 @@
 		"./src/config/biome/rules/no_empty_catch.grit",
 		"./src/config/biome/rules/no_throwing_non_error.grit"
 	],
-	"assist": {
-		"actions": {
-			"source": {
-				"organizeImports": "on"
-			}
-		}
-	},
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded",
@@ -307,5 +271,42 @@
 		"parser": {
 			"tailwindDirectives": true
 		}
-	}
+	},
+	"root": true,
+	"overrides": [
+		{
+			"includes": ["**/*.test.ts", "**/*.spec.ts"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noMagicNumbers": "off",
+						"noNestedTernary": "off"
+					},
+					"nursery": {
+						"noConditionalExpect": "off",
+						"useDestructuring": "off",
+						"useExplicitType": "off",
+						"useExplicitReturnType": "off"
+					},
+					"correctness": {
+						"noUnresolvedImports": "off"
+					},
+					"suspicious": {
+						"noEmptyBlockStatements": "off"
+					},
+					"security": {
+						"noSecrets": "off"
+					},
+					"performance": {
+						"useTopLevelRegex": "off"
+					},
+					"complexity": {
+						"useMaxParams": "off",
+						"noExcessiveLinesPerFunction": "off",
+						"useSimplifiedLogicExpression": "off"
+					}
+				}
+			}
+		}
+	]
 }

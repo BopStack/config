@@ -15,17 +15,17 @@ const PACKAGE_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const PACKAGE_JSON = JSON.parse(readFileSync(join(PACKAGE_DIR, 'package.json'), 'utf-8'))
 
 describe('package.json exports', () => {
-	test('exports ./biome for shared Biome config', () => {
+	test('given package.json exports: should include ./biome for shared Biome config', () => {
 		expect(PACKAGE_JSON.exports).toBeDefined()
 		expect(PACKAGE_JSON.exports['./biome']).toBeDefined()
 	})
 
-	test('exports ./tsconfig/base for shared TypeScript base config', () => {
+	test('given package.json exports: should include ./tsconfig/base', () => {
 		expect(PACKAGE_JSON.exports).toBeDefined()
 		expect(PACKAGE_JSON.exports['./tsconfig/base']).toBeDefined()
 	})
 
-	test('exports values resolve to existing source files', () => {
+	test('given export entries: should resolve to existing source files', () => {
 		const biome_export = PACKAGE_JSON.exports['./biome']
 		const ts_export = PACKAGE_JSON.exports['./tsconfig/base']
 

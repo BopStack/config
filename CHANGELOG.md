@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.2] - 2026-06-12
+
+### Fixed
+
+- **biome:** Set `correctness/useImportExtensions` to `off` in shared biome config to suppress recommended `warn` level for downstream consumers
+- **biome:** Add `just sync-biome` to copy shared biome config into root `biome.json` with local plugin paths
+- **biome:** Fix local Biome diagnostics for test naming and import ordering
+
+### Chores
+
+- Release v0.2.2
+## [0.2.1] - 2026-06-09
+
+### Fixed
+
+- Missing quote in release recipe echo line
+- Publish biome-config.json with useConsistentTypeDefinitions style:type and tailwindDirectives
 ## [0.2.0] - 2026-06-09
 
 ### Added
@@ -87,6 +104,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Lock single-package config contracts
 - Update e2e fixtures for single-package config
 
+[0.2.2]: https://github.com/BopStack/config/compare/v0.2.1...v0.2.2
+[0.2.1]: https://github.com/BopStack/config/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/BopStack/config/compare/v0.1.1...v0.2.0
 [0.1.1]: https://github.com/BopStack/config/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/BopStack/config/releases/tag/v0.1.0

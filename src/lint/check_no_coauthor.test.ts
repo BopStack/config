@@ -1,6 +1,6 @@
-import { describe, test, expect } from 'vitest'
-import { join, dirname } from 'node:path'
+import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { describe, expect, test } from 'vitest'
 import { check_no_coauthor } from './check_no_coauthor.ts'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))

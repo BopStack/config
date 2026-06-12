@@ -18,7 +18,7 @@ function create_mock_deps(overrides: Partial<InitDeps> = {}): InitDeps {
 }
 
 describe('run_init_core', () => {
-	test('returns target_missing error when target does not exist', () => {
+	test('given a nonexistent target: should return target_missing error', () => {
 		const deps = create_mock_deps({ exists: () => false })
 		const result = run_init_core({ target: '/nonexistent', kind: 'default', dryRun: true }, deps)
 
@@ -28,7 +28,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	test('returns install_failed error when install fails', () => {
+	test('given a failing install: should return install_failed error', () => {
 		const deps = create_mock_deps({
 			install: () => ({ status: 42, stderr: 'mock failure' })
 		})
@@ -45,7 +45,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	test('returns ok with packageCount on successful dry-run', () => {
+	test('given a successful dry-run: should return ok with packageCount', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: true },
 			create_mock_deps()
@@ -57,7 +57,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	test('returns ok on successful install', () => {
+	test('given a successful install: should return ok with packageCount', () => {
 		const result = run_init_core(
 			{ target: '/tmp/project', kind: 'default', dryRun: false },
 			create_mock_deps()
@@ -69,7 +69,7 @@ describe('run_init_core', () => {
 		}
 	})
 
-	test('calls log and warn deps', () => {
+	test('given a dry-run core execution: should call log and warn deps', () => {
 		const logs: string[] = []
 		const warns: string[] = []
 
