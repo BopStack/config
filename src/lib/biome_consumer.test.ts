@@ -33,7 +33,7 @@ function run_as_consumer(fixture_code: string, fixture_name: string): string {
 		// Create a consumer biome.json that extends @bopstack/config/biome
 		const biome_json = JSON.stringify(
 			{
-				$schema: 'https://biomejs.dev/schemas/2.4.16/schema.json',
+				$schema: 'https://biomejs.dev/schemas/2.5.0/schema.json',
 				root: true,
 				extends: ['@bopstack/config/biome'],
 			},

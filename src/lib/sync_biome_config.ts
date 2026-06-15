@@ -31,10 +31,10 @@ const TEST_FILE_OVERRIDES: JsonObject[] = [
 				style: {
 					noMagicNumbers: 'off',
 					noNestedTernary: 'off',
+					useDestructuring: 'off',
 				},
 				nursery: {
 					noConditionalExpect: 'off',
-					useDestructuring: 'off',
 					useExplicitType: 'off',
 					useExplicitReturnType: 'off',
 				},

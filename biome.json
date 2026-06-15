@@ -1,5 +1,5 @@
 {
-	"$schema": "https://biomejs.dev/schemas/2.4.16/schema.json",
+	"$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "tab",
@@ -13,7 +13,7 @@
 			"types": "all"
 		},
 		"rules": {
-			"recommended": true,
+			"preset": "recommended",
 			"correctness": {
 				"useImportExtensions": "off",
 				"noUnresolvedImports": "off",
@@ -62,7 +62,23 @@
 				"useExponentiationOperator": "error",
 				"useExportType": "error",
 				"useImportType": "error",
-				"useNamingConvention": "off"
+				"useNamingConvention": "off",
+				"noTernary": "off",
+				"useErrorCause": "error",
+				"useGlobalThis": "error",
+				"useSpreadOverApply": "error",
+				"noExcessiveClassesPerFile": "error",
+				"noExcessiveLinesPerFile": {
+					"level": "error",
+					"options": {
+						"maxLines": 400,
+						"skipBlankLines": true
+					}
+				},
+				"useConsistentEnumValueType": "error",
+				"useConsistentMethodSignatures": "error",
+				"noIncrementDecrement": "error",
+				"useDestructuring": "error"
 			},
 			"suspicious": {
 				"noConsole": "off",
@@ -97,7 +113,15 @@
 				"useAdjacentOverloadSignatures": "error",
 				"noAlert": "error",
 				"noEmptyInterface": "error",
-				"noImplicitAnyLet": "error"
+				"noImplicitAnyLet": "error",
+				"noShadow": "error",
+				"noUndeclaredEnvVars": "error",
+				"useArraySortCompare": "error",
+				"noUnnecessaryConditions": "error",
+				"noDuplicateEnumValues": "error",
+				"noForIn": "error",
+				"noNestedPromises": "error",
+				"noReturnAssign": "error"
 			},
 			"complexity": {
 				"noForEach": "error",
@@ -159,11 +183,13 @@
 				"useIndexOf": "error",
 				"useNumericLiterals": "error",
 				"useRegexLiterals": "error",
-				"useSimpleNumberKeys": "error"
+				"useSimpleNumberKeys": "error",
+				"useArrayFind": "error"
 			},
 			"security": {
 				"noSecrets": "error",
-				"noBlankTarget": "error"
+				"noBlankTarget": "error",
+				"noScriptUrl": "error"
 			},
 			"performance": {
 				"noAccumulatingSpread": "error",
@@ -173,40 +199,27 @@
 				"noNamespaceImport": "error",
 				"noReExportAll": "error",
 				"useTopLevelRegex": "error",
-				"noDynamicNamespaceImportAccess": "error"
+				"noDynamicNamespaceImportAccess": "error",
+				"noJsxPropsBind": "error"
 			},
 			"nursery": {
 				"noInlineStyles": "error",
 				"useSortedClasses": "error",
-				"noTernary": "off",
 				"useExhaustiveSwitchCases": "error",
 				"useAwaitThenable": "error",
-				"useErrorCause": "error",
 				"useArraySome": "error",
-				"useFind": "error",
 				"useNullishCoalescing": "error",
 				"useStringStartsEndsWith": "error",
-				"useGlobalThis": "error",
-				"useSpread": "error",
 				"useRegexpTest": "error",
 				"useRegexpExec": "error",
 				"useMathMinMax": "error",
 				"useDomQuerySelector": "error",
 				"useDomNodeTextContent": "error",
 				"noComponentHookFactories": "error",
-				"noShadow": "error",
 				"noFloatingPromises": "error",
 				"noMisusedPromises": "error",
 				"noUselessTypeConversion": "error",
 				"noExcessiveNestedCallbacks": "error",
-				"noExcessiveClassesPerFile": "error",
-				"noExcessiveLinesPerFile": {
-					"level": "error",
-					"options": {
-						"maxLines": 400,
-						"skipBlankLines": true
-					}
-				},
 				"useExplicitType": "off",
 				"useExplicitReturnType": "error",
 				"useConsistentTestIt": {
@@ -216,28 +229,15 @@
 						"withinDescribe": "test"
 					}
 				},
-				"useConsistentEnumValueType": "error",
 				"useDisposables": "error",
-				"useConsistentMethodSignatures": "error",
-				"noUndeclaredEnvVars": "error",
 				"noConditionalExpect": "error",
 				"noIdenticalTestTitle": "error",
 				"useExpect": "error",
 				"useTestHooksInOrder": "error",
 				"useTestHooksOnTop": "error",
-				"useArraySortCompare": "error",
-				"noUnnecessaryConditions": "error",
 				"noUnsafePlusOperands": "error",
 				"noBaseToString": "error",
-				"noDuplicateEnumValues": "error",
-				"noForIn": "error",
-				"noIncrementDecrement": "error",
-				"noJsxPropsBind": "error",
 				"noMisleadingReturnType": "error",
-				"noNestedPromises": "error",
-				"noReturnAssign": "error",
-				"noScriptUrl": "error",
-				"useDestructuring": "error",
 				"useImportsFirst": "error"
 			}
 		}
@@ -280,11 +280,11 @@
 				"rules": {
 					"style": {
 						"noMagicNumbers": "off",
-						"noNestedTernary": "off"
+						"noNestedTernary": "off",
+						"useDestructuring": "off"
 					},
 					"nursery": {
 						"noConditionalExpect": "off",
-						"useDestructuring": "off",
 						"useExplicitType": "off",
 						"useExplicitReturnType": "off"
 					},
