@@ -1,6 +1,6 @@
 {
 	"name": "@bopstack/config",
-	"version": "0.2.4",
+	"version": "0.2.5",
 	"description": "Shared Biome and TypeScript configs plus an init CLI for BopStack projects.",
 	"keywords": [
 		"bopstack",
