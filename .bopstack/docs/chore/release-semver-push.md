@@ -17,6 +17,7 @@ Before running this chore, ensure:
 - [ ] You are on the branch that should be released.
 - [ ] All intended changes are present in the working tree.
 - [ ] No unrelated or surprise files are in `git status --short`.
+- [ ] `.bopstack/` debug/session artifacts have been committed separately or are absent.
 - [ ] The remote branch and tag destination are correct.
 - [ ] You have permission to push commits and tags.
 
@@ -34,6 +35,15 @@ branch="$(git branch --show-current)"
 ```
 
 Expected: only intended release changes are present, and `branch` is the branch to release.
+
+**If `.bopstack/` artifacts are present** (debug logs, session artifacts, etc.):
+commit them as a separate `docs:` commit before proceeding to the release flow.
+This keeps release-scoped changes clean.
+
+```bash
+git add .bopstack/
+git commit -m "docs: add .bopstack artifacts"
+```
 
 ### Step 2: Run the release gate
 
@@ -155,3 +165,4 @@ After successful completion:
 - The `just release` recipe intentionally amends the release commit so `package.json` and `CHANGELOG.md` land together.
 - Push the tag only after verifying the release commit and changelog.
 - This chore does not publish the package to a registry.
+- `.bopstack/` artifacts (debug logs, session exports, etc.) should be committed as standalone `docs:` commits _before_ the release flow — never swept into the release commit via `git add -A`.
