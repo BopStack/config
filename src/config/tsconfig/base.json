@@ -1,7 +1,8 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"target": "ES2022",
+		"target": "esnext",
+		"lib": ["esnext"],
 		"module": "ESNext",
 		"moduleResolution": "Bundler",
 		"moduleDetection": "force",
